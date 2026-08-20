@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-08-20T14:00:17+00:00",
+  "n_relevant": 17495,
+  "n_extracted_records": 12331,
+  "n_extraction_rows": 26964,
+  "orphan_extractions": 0,
+  "extraction_coverage_pct": 70.483,
+  "n_themes": 36,
+  "n_themes_observed": 33,
+  "n_segments": 8,
+  "skipped_segments": [],
+  "n_category_diffs": 49,
+  "n_metrics": 486,
+  "min_recurring_records": 3,
+  "small_n_category": 30,
+  "outputs": {
+    "themes": "data/synthesis/themes.parquet",
+    "segments": "data/synthesis/segments.parquet",
+    "category_diffs": "data/synthesis/category_diffs.parquet",
+    "metrics": "data/synthesis/metrics.parquet"
+  },
+  "notes": [
+    "Percentages use the named denominator on each row. pct_relevant is unique_records / relevant.",
+    "Theme frequency is not purchase causality. scrape_has_purchase_outcomes is hypothesis.",
+    "Segments are omitted until they have recurring observed evidence; they are not invented personas.",
+    "Category cuts with n_small=true are not robust."
+  ]
+}

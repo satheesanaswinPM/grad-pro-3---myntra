@@ -1,0 +1,40 @@
+{
+  "generated_at": "2026-08-19T19:15:38+00:00",
+  "n_canonical": 24575,
+  "n_relevant": 17495,
+  "pct_relevant": 71.19,
+  "relevant_path": "data/processed/relevant.parquet",
+  "journey_path": "data/processed/journey_tags.parquet",
+  "rules_path": "reports/relevance_rules.md",
+  "by_source": {
+    "google_play": {
+      "all": 856,
+      "relevant": 151
+    },
+    "app_store": {
+      "all": 47,
+      "relevant": 19
+    },
+    "reddit": {
+      "all": 77,
+      "relevant": 39
+    },
+    "product_reviews": {
+      "all": 22634,
+      "relevant": 17286
+    },
+    "myntra_catalog": {
+      "all": 961,
+      "relevant": 0
+    }
+  },
+  "stage_counts": {
+    "unlabeled": 5652,
+    "evaluation": 8472,
+    "purchase": 8805,
+    "abandonment": 1373,
+    "discovery": 88,
+    "consideration": 181,
+    "wishlist": 4
+  }
+}

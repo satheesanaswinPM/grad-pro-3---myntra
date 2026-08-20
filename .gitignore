@@ -15,13 +15,22 @@ data/cache/*
 !data/cache/.gitkeep
 data/logs/*
 !data/logs/.gitkeep
+# Keep the console snapshot tracked so Streamlit Cloud can load quotes.
 data/processed/*
 !data/processed/.gitkeep
+!data/processed/relevant.parquet
+!data/processed/phase2_manifest.json
 data/extractions/*
 !data/extractions/.gitkeep
+!data/extractions/*.parquet
+!data/extractions/manifest.json
 data/synthesis/*
 !data/synthesis/.gitkeep
+!data/synthesis/*.parquet
+!data/synthesis/manifest.json
 data/scoring/*
 !data/scoring/.gitkeep
+!data/scoring/*.parquet
+!data/scoring/manifest.json
 exports/evidence_packs/*
 !exports/evidence_packs/.gitkeep

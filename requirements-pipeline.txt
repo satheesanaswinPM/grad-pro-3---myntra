@@ -1,0 +1,5 @@
+-r requirements.txt
+datasets>=2.20.0
+huggingface_hub>=0.24.0
+apify-client>=1.8.0
+google-play-scraper>=1.2.0

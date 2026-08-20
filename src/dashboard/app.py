@@ -43,7 +43,7 @@ PAGES = (
 )
 
 
-@st.cache_data(show_spinner="Loading research tables...")
+@st.cache_resource(show_spinner="Loading research tables...")
 def load_store() -> Store:
     return Store.build()
 
@@ -56,7 +56,11 @@ def main() -> None:
     if st.session_state.get("nav") not in labels:
         st.session_state["nav"] = labels[0]
     picked = st.sidebar.radio("Module", labels, key="nav")
-    store = load_store()
+    try:
+        store = load_store()
+    except FileNotFoundError as exc:
+        st.error(str(exc))
+        st.stop()
     render = dict(PAGES)[picked]
     render(store)
 

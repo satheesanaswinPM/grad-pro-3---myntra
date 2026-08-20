@@ -381,6 +381,8 @@ Re-run from the project root:
 python -m src.dashboard
 ```
 
+Streamlit Community Cloud uses `streamlit_app.py` at the repo root (Python 3.12). The console snapshot in `data/processed`, `data/extractions`, `data/synthesis`, and `data/scoring` is what the hosted app reads. Do not point Cloud at `python -m src.dashboard` (that path writes evidence packs).
+
 **Artifacts**
 
 - `src/dashboard/` (research console)

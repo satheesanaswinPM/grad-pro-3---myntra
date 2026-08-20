@@ -1,0 +1,64 @@
+{
+  "generated_at": "2026-08-20T14:11:33+00:00",
+  "formula_version": "score_v1",
+  "n_relevant": 17495,
+  "n_opportunities": 20,
+  "n_observed_opportunities": 19,
+  "n_hypotheses": 10,
+  "top_hypotheses": 10,
+  "purchase_outcomes": false,
+  "conversion_link_status": "hypothesis",
+  "top5": [
+    {
+      "rank": 1,
+      "opportunity_id": "opp:returns_exchange",
+      "total_score": 3.3151,
+      "unique_records": 2095,
+      "pct_relevant": 11.9748,
+      "status": "observed_evidence"
+    },
+    {
+      "rank": 2,
+      "opportunity_id": "opp:image_vs_reality",
+      "total_score": 2.9641,
+      "unique_records": 2023,
+      "pct_relevant": 11.5633,
+      "status": "observed_evidence"
+    },
+    {
+      "rank": 3,
+      "opportunity_id": "opp:price_watch",
+      "total_score": 2.8314,
+      "unique_records": 1143,
+      "pct_relevant": 6.5333,
+      "status": "observed_evidence"
+    },
+    {
+      "rank": 4,
+      "opportunity_id": "opp:comparison_loop",
+      "total_score": 2.8031,
+      "unique_records": 523,
+      "pct_relevant": 2.9894,
+      "status": "observed_evidence"
+    },
+    {
+      "rank": 5,
+      "opportunity_id": "opp:fit_uncertainty",
+      "total_score": 2.7321,
+      "unique_records": 2143,
+      "pct_relevant": 12.2492,
+      "status": "observed_evidence"
+    }
+  ],
+  "outputs": {
+    "opportunities": "data/scoring/opportunities.parquet",
+    "register": "reports/opportunity_register.md",
+    "hypotheses": "reports/research_hypotheses.md"
+  },
+  "notes": [
+    "Frequency uses the relevant corpus, not the full scrape.",
+    "Total is an un-inflated sum of five 0-1 dimensions (max 5).",
+    "Conversion link is hypothesis unless the scrape contains purchase outcomes.",
+    "Do not treat this ranking as a coupon or markdown brief."
+  ]
+}
