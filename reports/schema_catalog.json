@@ -1,0 +1,1476 @@
+{
+  "generated_at": "2026-08-20T00:34:46",
+  "raw_root": "data/raw/",
+  "note": "Phase 0 inspects raw files in place. Raw data is never overwritten.",
+  "file_count": 11,
+  "record_count": 39470,
+  "files": [
+    {
+      "relative_path": "apify/google_play_reviews.jsonl",
+      "format": "jsonl",
+      "bytes": 409223,
+      "record_count": 499,
+      "source_guess": "google_play",
+      "roles": {
+        "rating": "rating",
+        "text": "text",
+        "user_key": "userName",
+        "date": "reviewDate",
+        "url": "url",
+        "source": "_origin"
+      },
+      "error": null,
+      "fields": [
+        {
+          "name": "reviewId",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 499,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "3601db35-20f5-4d9e-9cea-15b6bb0ad3a2"
+        },
+        {
+          "name": "appId",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 499,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "com.myntra.android"
+        },
+        {
+          "name": "rating",
+          "inferred_role": "rating",
+          "dtype": "int",
+          "non_null": 499,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "5"
+        },
+        {
+          "name": "text",
+          "inferred_role": "text",
+          "dtype": "str",
+          "non_null": 499,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "you can really get good products here Loved this platform"
+        },
+        {
+          "name": "userName",
+          "inferred_role": "user_key",
+          "dtype": "str",
+          "non_null": 499,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Anusha Gt"
+        },
+        {
+          "name": "userImage",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 499,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "https://play-lh.googleusercontent.com/a/ACg8ocJ4bSr0h_fcZow4jgPjus-SqXxnvvcKD4pnR9O86njkspEgPA=mo"
+        },
+        {
+          "name": "reviewDate",
+          "inferred_role": "date",
+          "dtype": "str",
+          "non_null": 499,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "2026-08-18T18:54:33.763Z"
+        },
+        {
+          "name": "thumbsUp",
+          "inferred_role": null,
+          "dtype": "int",
+          "non_null": 499,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "0"
+        },
+        {
+          "name": "version",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 421,
+          "null": 78,
+          "missing_pct": 15.63,
+          "example": "4.2608.20"
+        },
+        {
+          "name": "replyText",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 102,
+          "null": 397,
+          "missing_pct": 79.56,
+          "example": "Hey! We regret any inconvenience caused while shopping with us! For us to have a direct conversation with you, please share the details about this review/feedback, & purchase deta…"
+        },
+        {
+          "name": "replyDate",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 102,
+          "null": 397,
+          "missing_pct": 79.56,
+          "example": "2026-08-18T18:56:14.788Z"
+        },
+        {
+          "name": "url",
+          "inferred_role": "url",
+          "dtype": "str",
+          "non_null": 499,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "https://play.google.com/store/apps/details?id=com.myntra.android&reviewId=3601db35-20f5-4d9e-9cea-15b6bb0ad3a2"
+        },
+        {
+          "name": "criteriaRatings",
+          "inferred_role": "rating",
+          "dtype": "null",
+          "non_null": 0,
+          "null": 499,
+          "missing_pct": 100.0,
+          "example": ""
+        },
+        {
+          "name": "scrapedAt",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 499,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "2026-08-19T19:01:40.020Z"
+        },
+        {
+          "name": "_origin",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 499,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "apify"
+        },
+        {
+          "name": "_apify_actor",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 499,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "webdatalabs/google-play-reviews-scraper"
+        },
+        {
+          "name": "source",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 499,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "google_play"
+        }
+      ]
+    },
+    {
+      "relative_path": "apify/myntra_product_reviews.jsonl",
+      "format": "jsonl",
+      "bytes": 0,
+      "record_count": 0,
+      "source_guess": "product_reviews",
+      "roles": {},
+      "error": null,
+      "fields": []
+    },
+    {
+      "relative_path": "apify/reddit_myntra.jsonl",
+      "format": "jsonl",
+      "bytes": 90442,
+      "record_count": 80,
+      "source_guess": "reddit",
+      "roles": {
+        "url": "url",
+        "user_key": "username",
+        "text": "title",
+        "date": "createdAt",
+        "source": "_origin",
+        "product_or_category": "category"
+      },
+      "error": null,
+      "fields": [
+        {
+          "name": "id",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 80,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "t3_1s599ao"
+        },
+        {
+          "name": "parsedId",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 80,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "1s599ao"
+        },
+        {
+          "name": "url",
+          "inferred_role": "url",
+          "dtype": "str",
+          "non_null": 80,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "https://www.reddit.com/r/IndianFashionAddicts/comments/1s599ao/which_are_your_fave_myntra_brands/"
+        },
+        {
+          "name": "username",
+          "inferred_role": "user_key",
+          "dtype": "str",
+          "non_null": 80,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "vee4victorie"
+        },
+        {
+          "name": "title",
+          "inferred_role": "text",
+          "dtype": "str",
+          "non_null": 80,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Which are your fave myntra brands?"
+        },
+        {
+          "name": "communityName",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 80,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "r/IndianFashionAddicts"
+        },
+        {
+          "name": "parsedCommunityName",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 80,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "IndianFashionAddicts"
+        },
+        {
+          "name": "body",
+          "inferred_role": "text",
+          "dtype": "str",
+          "non_null": 80,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Ladies pls tell drop brands that you like to shop from Myntra for good quality clothes at a reasonable price.I&#39;ll go first- Kurta sets-Indo era,Taavi Tshirts-souled store,Dill…"
+        },
+        {
+          "name": "html",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 80,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "<!-- SC_OFF --><div class=\"md\"><p>Ladies pls tell drop brands that you like to shop from Myntra for good quality clothes at a reasonable price.I&#39;ll go first-</p> <p>Kurta sets…"
+        },
+        {
+          "name": "createdAt",
+          "inferred_role": "date",
+          "dtype": "str",
+          "non_null": 80,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "2026-03-27T16:35:46.000Z"
+        },
+        {
+          "name": "scrapedAt",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 80,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "2026-08-19T19:02:34.818Z"
+        },
+        {
+          "name": "dataType",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 80,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "post"
+        },
+        {
+          "name": "_origin",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 80,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "apify"
+        },
+        {
+          "name": "_apify_actor",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 80,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "trudax/reddit-scraper-lite"
+        },
+        {
+          "name": "source",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 80,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "reddit"
+        },
+        {
+          "name": "category",
+          "inferred_role": "product_or_category",
+          "dtype": "str",
+          "non_null": 72,
+          "null": 8,
+          "missing_pct": 10.0,
+          "example": "comment"
+        },
+        {
+          "name": "postId",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 72,
+          "null": 8,
+          "missing_pct": 10.0,
+          "example": "t3_1s599ao"
+        }
+      ]
+    },
+    {
+      "relative_path": "app_store/myntra.jsonl",
+      "format": "jsonl",
+      "bytes": 16946,
+      "record_count": 50,
+      "source_guess": "app_store",
+      "roles": {
+        "text": "title",
+        "rating": "rating",
+        "user_key": "userName",
+        "source": "source"
+      },
+      "error": null,
+      "fields": [
+        {
+          "name": "id",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 50,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "14442486765"
+        },
+        {
+          "name": "title",
+          "inferred_role": "text",
+          "dtype": "str",
+          "non_null": 50,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Rare rabbit"
+        },
+        {
+          "name": "content",
+          "inferred_role": "text",
+          "dtype": "str",
+          "non_null": 50,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Superb quality,smooth texture of T-shirt and fitting perfect"
+        },
+        {
+          "name": "rating",
+          "inferred_role": "rating",
+          "dtype": "str",
+          "non_null": 50,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "5"
+        },
+        {
+          "name": "userName",
+          "inferred_role": "user_key",
+          "dtype": "str",
+          "non_null": 50,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Shaili Shukla"
+        },
+        {
+          "name": "updated",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 50,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "2026-08-18T04:47:50-07:00"
+        },
+        {
+          "name": "source",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 50,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "app_store"
+        },
+        {
+          "name": "app_id",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 50,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "907394059"
+        },
+        {
+          "name": "_origin",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 50,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "itunes_rss"
+        },
+        {
+          "name": "_fetched_at",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 50,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "2026-08-19T18:50:40.314789+00:00"
+        }
+      ]
+    },
+    {
+      "relative_path": "google_play/ajio.jsonl",
+      "format": "jsonl",
+      "bytes": 208505,
+      "record_count": 400,
+      "source_guess": "google_play",
+      "roles": {
+        "user_key": "userName",
+        "text": "content",
+        "rating": "score",
+        "source": "source"
+      },
+      "error": null,
+      "fields": [
+        {
+          "name": "reviewId",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "fdeb85b9-1535-4de8-9df3-2e8c35acd1ef"
+        },
+        {
+          "name": "userName",
+          "inferred_role": "user_key",
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Mohd Shahbaz"
+        },
+        {
+          "name": "content",
+          "inferred_role": "text",
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "good product"
+        },
+        {
+          "name": "score",
+          "inferred_role": "rating",
+          "dtype": "int",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "5"
+        },
+        {
+          "name": "thumbsUpCount",
+          "inferred_role": null,
+          "dtype": "int",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "0"
+        },
+        {
+          "name": "reviewCreatedVersion",
+          "inferred_role": "text",
+          "dtype": "str",
+          "non_null": 353,
+          "null": 47,
+          "missing_pct": 11.75,
+          "example": "9.38.1"
+        },
+        {
+          "name": "at",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "2026-08-19T00:18:50"
+        },
+        {
+          "name": "replyContent",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 136,
+          "null": 264,
+          "missing_pct": 66.0,
+          "example": "Hey Prasanna! We strive to provide a hassle free experience and we are sorry to know that you are facing a problem. Please reach out to us on 1800-8899-991 or write to us at custo…"
+        },
+        {
+          "name": "app_id",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "com.ril.ajio"
+        },
+        {
+          "name": "source",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "google_play"
+        },
+        {
+          "name": "_origin",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "google-play-scraper"
+        },
+        {
+          "name": "_note",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Public Play Store reviews. Used because APIFY_TOKEN was not set."
+        }
+      ]
+    },
+    {
+      "relative_path": "google_play/meesho.jsonl",
+      "format": "jsonl",
+      "bytes": 272141,
+      "record_count": 400,
+      "source_guess": "google_play",
+      "roles": {
+        "user_key": "userName",
+        "text": "content",
+        "rating": "score",
+        "source": "source"
+      },
+      "error": null,
+      "fields": [
+        {
+          "name": "reviewId",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "cf54e521-47ba-4bec-b481-2fd2dbc86bd0"
+        },
+        {
+          "name": "userName",
+          "inferred_role": "user_key",
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Dibyendu"
+        },
+        {
+          "name": "content",
+          "inferred_role": "text",
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Very good real time tracking experience"
+        },
+        {
+          "name": "score",
+          "inferred_role": "rating",
+          "dtype": "int",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "5"
+        },
+        {
+          "name": "thumbsUpCount",
+          "inferred_role": null,
+          "dtype": "int",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "0"
+        },
+        {
+          "name": "reviewCreatedVersion",
+          "inferred_role": "text",
+          "dtype": "str",
+          "non_null": 324,
+          "null": 76,
+          "missing_pct": 19.0,
+          "example": "29.0"
+        },
+        {
+          "name": "at",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "2026-08-19T00:19:44"
+        },
+        {
+          "name": "replyContent",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 398,
+          "null": 2,
+          "missing_pct": 0.5,
+          "example": "Hi, Wow, we were blown away by your positive words, we really appreciate the time you took to write such a detailed review! Thanks again!"
+        },
+        {
+          "name": "app_id",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "com.meesho.supply"
+        },
+        {
+          "name": "source",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "google_play"
+        },
+        {
+          "name": "_origin",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "google-play-scraper"
+        },
+        {
+          "name": "_note",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Public Play Store reviews. Used because APIFY_TOKEN was not set."
+        }
+      ]
+    },
+    {
+      "relative_path": "google_play/myntra.jsonl",
+      "format": "jsonl",
+      "bytes": 202994,
+      "record_count": 400,
+      "source_guess": "google_play",
+      "roles": {
+        "user_key": "userName",
+        "text": "content",
+        "rating": "score",
+        "source": "source"
+      },
+      "error": null,
+      "fields": [
+        {
+          "name": "reviewId",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "3b563ce3-9864-4d10-a1d8-afbb634a981d"
+        },
+        {
+          "name": "userName",
+          "inferred_role": "user_key",
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Sanchit Lakhanpal"
+        },
+        {
+          "name": "content",
+          "inferred_role": "text",
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Nice"
+        },
+        {
+          "name": "score",
+          "inferred_role": "rating",
+          "dtype": "int",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "4"
+        },
+        {
+          "name": "thumbsUpCount",
+          "inferred_role": null,
+          "dtype": "int",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "0"
+        },
+        {
+          "name": "reviewCreatedVersion",
+          "inferred_role": "text",
+          "dtype": "str",
+          "non_null": 332,
+          "null": 68,
+          "missing_pct": 17.0,
+          "example": "4.2607.11"
+        },
+        {
+          "name": "at",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "2026-08-19T00:17:05"
+        },
+        {
+          "name": "replyContent",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 71,
+          "null": 329,
+          "missing_pct": 82.25,
+          "example": "Hey! We regret any inconvenience caused while shopping with us! For us to have a direct conversation with you, please share the details about this review/feedback, & purchase deta…"
+        },
+        {
+          "name": "app_id",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "com.myntra.android"
+        },
+        {
+          "name": "source",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "google_play"
+        },
+        {
+          "name": "_origin",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "google-play-scraper"
+        },
+        {
+          "name": "_note",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 400,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Public Play Store reviews. Used because APIFY_TOKEN was not set."
+        }
+      ]
+    },
+    {
+      "relative_path": "huggingface/Gssmc__myntra_dataset/train.jsonl",
+      "format": "jsonl",
+      "bytes": 10845712,
+      "record_count": 15000,
+      "source_guess": "huggingface",
+      "roles": {
+        "date": "crawl_timestamp",
+        "product_or_category": "product_id",
+        "text": "title",
+        "source": "_origin"
+      },
+      "error": null,
+      "fields": [
+        {
+          "name": "uniq_id",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 14000,
+          "missing_pct": 93.33,
+          "example": "cc51c3dd925d9d84e2fb28c7918dbbc3"
+        },
+        {
+          "name": "crawl_timestamp",
+          "inferred_role": "date",
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 14000,
+          "missing_pct": 93.33,
+          "example": "2019-08-11 05:49:46 +0000"
+        },
+        {
+          "name": "product_id",
+          "inferred_role": "product_or_category",
+          "dtype": "float",
+          "non_null": 1000,
+          "null": 14000,
+          "missing_pct": 93.33,
+          "example": "6937673.0"
+        },
+        {
+          "name": "size",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 14000,
+          "missing_pct": 93.33,
+          "example": "XL"
+        },
+        {
+          "name": "variant_sku",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 14000,
+          "missing_pct": 93.33,
+          "example": "6937673_XL"
+        },
+        {
+          "name": "brand",
+          "inferred_role": "product_or_category",
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 14000,
+          "missing_pct": 93.33,
+          "example": "IMARA"
+        },
+        {
+          "name": "care_instructions",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 998,
+          "null": 14002,
+          "missing_pct": 93.35,
+          "example": "Polyester | Dry-clean"
+        },
+        {
+          "name": "dominant_material",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 960,
+          "null": 14040,
+          "missing_pct": 93.6,
+          "example": "Polyester"
+        },
+        {
+          "name": "title",
+          "inferred_role": "text",
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 14000,
+          "missing_pct": 93.33,
+          "example": "IMARA Women Black Solid Top"
+        },
+        {
+          "name": "actual_color",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 934,
+          "null": 14066,
+          "missing_pct": 93.77,
+          "example": "Black"
+        },
+        {
+          "name": "dominant_color",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 934,
+          "null": 14066,
+          "missing_pct": 93.77,
+          "example": "Black"
+        },
+        {
+          "name": "product_type",
+          "inferred_role": "product_or_category",
+          "dtype": "str",
+          "non_null": 912,
+          "null": 14088,
+          "missing_pct": 93.92,
+          "example": "Top"
+        },
+        {
+          "name": "body",
+          "inferred_role": "text",
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 14000,
+          "missing_pct": 93.33,
+          "example": "Black solid woven regular top,has a V-neck, three-quarter sleeves, an attached lining\nThe model (height 5'8\") is wearing a size S\nImprove your personal style with a brand new thre…"
+        },
+        {
+          "name": "product_details",
+          "inferred_role": "product_or_category",
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 14000,
+          "missing_pct": 93.33,
+          "example": "Black solid woven regular top,has a V-neck, three-quarter sleeves, an attached lining"
+        },
+        {
+          "name": "size_fit",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 891,
+          "null": 14109,
+          "missing_pct": 94.06,
+          "example": "The model (height 5'8\") is wearing a size S"
+        },
+        {
+          "name": "complete_the_look",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 980,
+          "null": 14020,
+          "missing_pct": 93.47,
+          "example": "Improve your personal style with a brand new three-quarter sleeve top designed by IMARA.  When you want to have the perfect outfit for a fun lunch with the girls, you'll want to p…"
+        },
+        {
+          "name": "type",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 14000,
+          "missing_pct": 93.33,
+          "example": "Clothing/Women/Tops/IMARA/More by IMARA"
+        },
+        {
+          "name": "variant_price",
+          "inferred_role": null,
+          "dtype": "float",
+          "non_null": 1000,
+          "null": 14000,
+          "missing_pct": 93.33,
+          "example": "959.0"
+        },
+        {
+          "name": "variant_compare_at_price",
+          "inferred_role": null,
+          "dtype": "float",
+          "non_null": 1000,
+          "null": 14000,
+          "missing_pct": 93.33,
+          "example": "1599.0"
+        },
+        {
+          "name": "ideal_for",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 14000,
+          "missing_pct": 93.33,
+          "example": "Women"
+        },
+        {
+          "name": "is_in_stock",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 14000,
+          "missing_pct": 93.33,
+          "example": "Out of Stock"
+        },
+        {
+          "name": "inventory",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 990,
+          "null": 14010,
+          "missing_pct": 93.4,
+          "example": "0"
+        },
+        {
+          "name": "specifications",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 497,
+          "null": 14503,
+          "missing_pct": 96.69,
+          "example": "Transparency : Opaque | Sleeve Styling : Bell Sleeves | Occasion : Ethnic | Main Trend : Ethnic Print | Print or Pattern Type : Solid | Number of Components : 1 | Neck : V-Neck | …"
+        },
+        {
+          "name": "Unnamed: 23",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 18,
+          "null": 14982,
+          "missing_pct": 99.88,
+          "example": "https://www.myntra.com/libas"
+        },
+        {
+          "name": "_origin",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 15000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "huggingface"
+        },
+        {
+          "name": "_hf_dataset",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 15000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Gssmc/myntra_dataset"
+        },
+        {
+          "name": "_hf_split",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 15000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "train"
+        },
+        {
+          "name": "source",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 15000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "huggingface"
+        }
+      ]
+    },
+    {
+      "relative_path": "huggingface/saattrupdan__womens-clothing-ecommerce-reviews/test.jsonl",
+      "format": "jsonl",
+      "bytes": 620902,
+      "record_count": 1000,
+      "source_guess": "product_reviews",
+      "roles": {
+        "text": "review_text",
+        "rating": "rating",
+        "source": "_origin"
+      },
+      "error": null,
+      "fields": [
+        {
+          "name": "review_text",
+          "inferred_role": "text",
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "I'm usually a 12, or size l in retailer and when i tried this on, buttoning it up from the bottom, i was so excited...until i reached the chest. it was way too tight in the bust a…"
+        },
+        {
+          "name": "age",
+          "inferred_role": null,
+          "dtype": "int",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "34"
+        },
+        {
+          "name": "rating",
+          "inferred_role": "rating",
+          "dtype": "int",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "3"
+        },
+        {
+          "name": "positive_feedback_count",
+          "inferred_role": "text",
+          "dtype": "int",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "2"
+        },
+        {
+          "name": "division_name",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "General"
+        },
+        {
+          "name": "department_name",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Jackets"
+        },
+        {
+          "name": "class_name",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Outerwear"
+        },
+        {
+          "name": "recommended_ind",
+          "inferred_role": null,
+          "dtype": "int",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "0"
+        },
+        {
+          "name": "_origin",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "huggingface"
+        },
+        {
+          "name": "_hf_dataset",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "saattrupdan/womens-clothing-ecommerce-reviews"
+        },
+        {
+          "name": "_hf_split",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "test"
+        },
+        {
+          "name": "source",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "huggingface"
+        }
+      ]
+    },
+    {
+      "relative_path": "huggingface/saattrupdan__womens-clothing-ecommerce-reviews/train.jsonl",
+      "format": "jsonl",
+      "bytes": 12954314,
+      "record_count": 20641,
+      "source_guess": "product_reviews",
+      "roles": {
+        "text": "review_text",
+        "rating": "rating",
+        "source": "_origin"
+      },
+      "error": null,
+      "fields": [
+        {
+          "name": "review_text",
+          "inferred_role": "text",
+          "dtype": "str",
+          "non_null": 20641,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "I loved this shirt until the first time i washed it. it shrunk so much it became unwearable. when i returned it the salesperson said she had also bought this shirt and the same th…"
+        },
+        {
+          "name": "age",
+          "inferred_role": null,
+          "dtype": "int",
+          "non_null": 20641,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "39"
+        },
+        {
+          "name": "rating",
+          "inferred_role": "rating",
+          "dtype": "int",
+          "non_null": 20641,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "1"
+        },
+        {
+          "name": "positive_feedback_count",
+          "inferred_role": "text",
+          "dtype": "int",
+          "non_null": 20641,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "0"
+        },
+        {
+          "name": "division_name",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 20641,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "General"
+        },
+        {
+          "name": "department_name",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 20641,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Tops"
+        },
+        {
+          "name": "class_name",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 20641,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Knits"
+        },
+        {
+          "name": "recommended_ind",
+          "inferred_role": null,
+          "dtype": "int",
+          "non_null": 20641,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "0"
+        },
+        {
+          "name": "_origin",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 20641,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "huggingface"
+        },
+        {
+          "name": "_hf_dataset",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 20641,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "saattrupdan/womens-clothing-ecommerce-reviews"
+        },
+        {
+          "name": "_hf_split",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 20641,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "train"
+        },
+        {
+          "name": "source",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 20641,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "huggingface"
+        }
+      ]
+    },
+    {
+      "relative_path": "huggingface/saattrupdan__womens-clothing-ecommerce-reviews/val.jsonl",
+      "format": "jsonl",
+      "bytes": 620361,
+      "record_count": 1000,
+      "source_guess": "product_reviews",
+      "roles": {
+        "text": "review_text",
+        "rating": "rating",
+        "source": "_origin"
+      },
+      "error": null,
+      "fields": [
+        {
+          "name": "review_text",
+          "inferred_role": "text",
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": ".... it sheds on my cloths something fierce! not much i can do as i don't want to return it because i love it so. i love the longer panel in the back and the side slits. nice weig…"
+        },
+        {
+          "name": "age",
+          "inferred_role": null,
+          "dtype": "int",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "53"
+        },
+        {
+          "name": "rating",
+          "inferred_role": "rating",
+          "dtype": "int",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "4"
+        },
+        {
+          "name": "positive_feedback_count",
+          "inferred_role": "text",
+          "dtype": "int",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "2"
+        },
+        {
+          "name": "division_name",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "General"
+        },
+        {
+          "name": "department_name",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Tops"
+        },
+        {
+          "name": "class_name",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "Sweaters"
+        },
+        {
+          "name": "recommended_ind",
+          "inferred_role": null,
+          "dtype": "int",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "1"
+        },
+        {
+          "name": "_origin",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "huggingface"
+        },
+        {
+          "name": "_hf_dataset",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "saattrupdan/womens-clothing-ecommerce-reviews"
+        },
+        {
+          "name": "_hf_split",
+          "inferred_role": null,
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "val"
+        },
+        {
+          "name": "source",
+          "inferred_role": "source",
+          "dtype": "str",
+          "non_null": 1000,
+          "null": 0,
+          "missing_pct": 0.0,
+          "example": "huggingface"
+        }
+      ]
+    }
+  ]
+}
