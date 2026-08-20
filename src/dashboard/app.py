@@ -22,6 +22,7 @@ from src.dashboard.modules import (
     opportunity_matrix,
     purchase_barriers,
     research_hypotheses,
+    solution_concepts,
     uncertainty_map,
     user_segments,
     wishlist_intent,
@@ -40,6 +41,7 @@ PAGES = (
     ("Opportunity matrix", opportunity_matrix.render),
     ("Evidence explorer", evidence_explorer.render),
     ("Research hypotheses", research_hypotheses.render),
+    ("Solution concepts", solution_concepts.render),
 )
 
 

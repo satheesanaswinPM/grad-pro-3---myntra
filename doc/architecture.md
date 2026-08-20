@@ -110,7 +110,7 @@ Relevance + journey tags
 
 ## 4. Phasewise plan
 
-Part 1 has seven build phases. Phase 7 (solution ideation) is **locked** until ranked opportunities and the research console exist.
+Part 1 has seven build phases. Phase 7 (solution ideation) stays **gated** until ranked opportunities and the research console exist.
 
 Relative effort is planning weight, not calendar time. Phase 3 (extraction) is the heaviest lift.
 
@@ -123,7 +123,7 @@ Relative effort is planning weight, not calendar time. Phase 3 (extraction) is t
 | 4 | Synthesize & Quantify | Discovery | 16 | Each segment cites recurring evidence. Every metric names its denominator. |
 | 5 | Opportunity Scoring | Discovery | 10 | Ranked list with visible scores and evidence packs. Causal claims labeled when unproven. |
 | 6 | Research Console | Discovery | 14 | A PM can answer the final research question from the console. |
-| 7 | Solution Ideation | **Locked** | — | Phases 5 and 6 complete. Top opportunities have evidence, not just model summaries. |
+| 7 | Solution Ideation | Ideation | — | Concepts validated against ranked barriers; 30-day experiments designed; no monetary primary lever. |
 
 ---
 
@@ -396,34 +396,43 @@ Streamlit Community Cloud uses `streamlit_app.py` at the repo root (Python 3.12)
 
 ---
 
-### Phase 7 — Solution Ideation (locked)
+### Phase 7 — Solution Ideation
 
-**Goal:** Only after Part 1: ideate, validate, and experiment on the strongest opportunity areas.
+**Goal:** Ideate, validate, and experiment on the strongest opportunity areas. Do not ship the conversion product here.
 
-**Why:** The brief forbids building the product solution until the underlying problems are evidenced and ranked.
+**Why:** The brief forbids building the product solution until the underlying problems are evidenced and ranked. Phases 5 and 6 are that gate.
 
 **Inputs**
 
 - Ranked opportunities
-- Evidence packs
+- Evidence packs / console click-through
 - Research hypotheses
 
-**Work (when unlocked)**
+**Work**
 
 1. Solution concepts that are not monetary incentives.
 2. Validation against the discovered barriers and missing information.
 3. Experiment design aimed at 30-day wishlist-to-purchase conversion.
 
-Until unlocked, this command only reports the lock:
+Re-run from the project root (locked until Phase 5 scoring and Phase 6 console files exist):
 
 ```bash
 python -m src.ideate
 ```
 
+**Artifacts**
+
+- `data/ideation/concepts.parquet`
+- `data/ideation/validations.parquet`
+- `data/ideation/experiments.parquet`
+- `reports/solution_concepts.md`
+- `reports/experiment_briefs.md`
+
 **Do not**
 
-- Start this phase now
 - Use discounts, coupons, cashback, or price-offs as the primary solution
+- Treat a high rank as causality (the scrape still has no purchase outcomes)
+- Ship the final conversion product in this phase
 
 ---
 
@@ -516,6 +525,7 @@ The dashboard should feel like a product-discovery / research intelligence tool.
 | 10 | Opportunity matrix | Frequency × severity/impact × evidence confidence |
 | 11 | Evidence explorer | Click an insight, read the actual feedback |
 | 12 | Research hypotheses | Testable follow-ups for primary research |
+| 13 | Solution concepts | Non-monetary concepts and 30-day experiment briefs (Phase 7) |
 
 ---
 
@@ -535,10 +545,11 @@ The dashboard should feel like a product-discovery / research intelligence tool.
 | `src/analyze/` | L1 | Prompted extractors, schema validation |
 | `src/synthesize/` | L2 | Themes, segments, quantification |
 | `src/score/` | L3 | Scoring framework |
-| `src/dashboard/` | L4 | Research console (12 modules) |
-| `src/ideate/` | Phase 7 | Solution ideation. Locked until 5 and 6 complete. |
-| `reports/` | Cross-cutting | Quality report, opportunity register |
+| `src/dashboard/` | L4 | Research console (12 discovery modules + Phase 7 concepts) |
+| `src/ideate/` | Phase 7 | Solution ideation. Gated until 5 and 6 complete. |
+| `reports/` | Cross-cutting | Quality report, opportunity register, experiment briefs |
 | `exports/evidence_packs/` | L4 | Click-through evidence packs for the console |
+| `data/ideation/` | Phase 7 | Concepts, validations, experiment briefs |
 | `doc/architecture.md` | — | This document |
 
 New phases keep this shape: `src/<package>/` with `__main__.py` + `run.py`, a `schema.py` contract, and outputs in the matching `data/` (or `reports/` / `exports/`) tree. Do not write into `data/raw/`.
@@ -569,4 +580,4 @@ New phases keep this shape: `src/<package>/` with `__main__.py` + `run.py`, a `s
 5. Cluster, segment, and quantify: `python -m src.synthesize` (Phase 4).
 6. Score opportunities and write hypotheses: `python -m src.score` (Phase 5).
 7. Ship the research console: `python -m src.dashboard` (Phase 6).
-8. **Stop.** Solution ideation (`python -m src.ideate`, Phase 7) starts only after 5 and 6 are done.
+8. Ideate and design 30-day experiments: `python -m src.ideate` (Phase 7). Do not ship the conversion product; do not use discounts as the primary lever.

@@ -1,1 +1,1 @@
-"""Phase 7: solution ideation. Locked until ranked opportunities and the research console exist."""
+"""Phase 7: solution ideation after ranked opportunities and the research console exist."""

@@ -17,6 +17,7 @@ CONSOLE_MODULES = (
     "opportunity_matrix",
     "evidence_explorer",
     "research_hypotheses",
+    "solution_concepts",
 )
 
 INSIGHT_FIELDS = (

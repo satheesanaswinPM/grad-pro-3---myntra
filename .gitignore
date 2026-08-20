@@ -32,5 +32,9 @@ data/scoring/*
 !data/scoring/.gitkeep
 !data/scoring/*.parquet
 !data/scoring/manifest.json
+data/ideation/*
+!data/ideation/.gitkeep
+!data/ideation/*.parquet
+!data/ideation/manifest.json
 exports/evidence_packs/*
 !exports/evidence_packs/.gitkeep

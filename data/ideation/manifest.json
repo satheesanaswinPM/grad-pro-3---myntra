@@ -1,0 +1,24 @@
+{
+  "generated_at": "2026-08-20T15:20:07+00:00",
+  "ideation_version": "ideate_v1",
+  "n_opportunities": 20,
+  "n_concepts": 10,
+  "n_validations": 10,
+  "n_experiments": 10,
+  "readiness": {
+    "primary_research_first": 2,
+    "ready_to_test": 8
+  },
+  "outputs": {
+    "concepts": "data/ideation/concepts.parquet",
+    "validations": "data/ideation/validations.parquet",
+    "experiments": "data/ideation/experiments.parquet",
+    "concept_report": "reports/solution_concepts.md",
+    "experiment_report": "reports/experiment_briefs.md"
+  },
+  "notes": [
+    "Concepts are not a shipped conversion product.",
+    "Discounts, coupons, cashback, and markdowns are not the primary solution.",
+    "Conversion experiments stay labeled hypothesis until they run."
+  ]
+}

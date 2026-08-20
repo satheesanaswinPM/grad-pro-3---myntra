@@ -10,7 +10,7 @@ Myntra Growth, Part 1: rank why wishlisted items are not bought, from public fee
 4. In **Advanced settings**, set **Python version to 3.12** (Cloud defaults can break pyarrow).
 5. Deploy. No secrets are required for the console; tables are already in the repo.
 
-## Run locally
+Local run:
 
 ```bash
 pip install -r requirements.txt
@@ -18,5 +18,7 @@ python -m src.dashboard
 ```
 
 Or: `streamlit run streamlit_app.py`
+
+Phase 7 (after 5 and 6): `python -m src.ideate` writes non-monetary concepts and 30-day experiment briefs.
 
 Rebuild pipeline tables (optional): `pip install -r requirements-pipeline.txt`, then phases 0–5 in `doc/architecture.md`.
