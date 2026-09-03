@@ -118,10 +118,10 @@ def render_hypotheses(stats: dict[str, Any], hypotheses: list[dict[str, Any]], o
             f"**Status:** `{row['status']}` "
             f"(conversion link is not proven in this scrape)\n"
         )
-    body = "\n".join(blocks) if blocks else "_No hypotheses. Re-run Phase 4–5 with extractions._"
-    return f"""# Research hypotheses — Phase 5
+    body = "\n".join(blocks) if blocks else "_No hypotheses. Re-run synthesis and scoring with extractions._"
+    return f"""# Research hypotheses
 
-Generated: {generated}  
+Generated: {generated}
 These are **testable follow-ups for primary research**, not product specs and not a discount brief.
 
 Top {TOP_HYPOTHESES} ranked opportunities with recurring observed evidence (or the next best rows if fewer).
@@ -133,6 +133,6 @@ Do **not** use discounts, coupons, cashback, or price-offs as the primary soluti
 ## How to use
 
 1. Pick the highest-ranked opportunity whose evidence you can actually interview against.
-2. Recruit from the evidence `record_id`s on that opportunity (Phase 6 evidence explorer).
+2. Recruit from the evidence `record_id`s on that opportunity (Evidence explorer).
 3. Keep the success signal's denominator explicit (wishlisters who still intend to buy, not the whole scrape).
 """

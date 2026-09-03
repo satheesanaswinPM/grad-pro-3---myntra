@@ -1,6 +1,6 @@
 # Opportunity register — Phase 5
 
-Generated: 2026-09-03T20:17:35+00:00  
+Generated: 2026-09-03T20:23:02+00:00  
 Formula: `score_v1`  
 Denominator for frequency: **relevant** (n = **17343**), not the full scrape.
 

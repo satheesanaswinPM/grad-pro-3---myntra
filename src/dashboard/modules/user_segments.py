@@ -11,7 +11,7 @@ def render(store: Store) -> None:
 
     st.header("User segments")
     banner()
-    st.caption("Segments exist only when Phase 4 found recurring observed evidence. They are not invented personas.")
+    st.caption("Segments exist only when synthesis found recurring observed evidence. They are not invented personas.")
     if not store.segments:
         st.warning("No segments earned existence.")
         return

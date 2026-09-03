@@ -16,12 +16,12 @@ def render(store: Store) -> None:
     st.header("Solution concepts")
     banner()
     st.caption(
-        "Phase 7 ideation. These are concepts and experiment designs, not a conversion product. "
+        "Ideation concepts. These are concepts and experiment designs, not a conversion product. "
         "Discounts are not the primary lever."
     )
     concepts_path = IDEATION / "concepts.parquet"
     if not concepts_path.exists():
-        st.warning("No ideation tables yet. Run `python -m src.ideate` after Phases 5 and 6.")
+        st.warning("No ideation tables yet. Run `python -m src.ideate` after scoring and the console are built.")
         return
 
     concepts = load_parquet(concepts_path)

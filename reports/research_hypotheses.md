@@ -1,6 +1,6 @@
-# Research hypotheses — Phase 5
+# Research hypotheses
 
-Generated: 2026-09-03T20:17:35+00:00  
+Generated: 2026-09-03T20:23:02+00:00
 These are **testable follow-ups for primary research**, not product specs and not a discount brief.
 
 Top 10 ranked opportunities with recurring observed evidence (or the next best rows if fewer).
@@ -131,5 +131,5 @@ Opportunity: `opp:external_research` (rank 10, total 2.3603, n=400 relevant)
 ## How to use
 
 1. Pick the highest-ranked opportunity whose evidence you can actually interview against.
-2. Recruit from the evidence `record_id`s on that opportunity (Phase 6 evidence explorer).
+2. Recruit from the evidence `record_id`s on that opportunity (Evidence explorer).
 3. Keep the success signal's denominator explicit (wishlisters who still intend to buy, not the whole scrape).

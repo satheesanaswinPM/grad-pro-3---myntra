@@ -14,7 +14,7 @@ def render(store: Store) -> None:
     st.header("Customer journey")
     banner()
     st.caption(
-        "Stages are Phase 2 heuristics on the relevant corpus. A review can mention purchase and still be tagged abandonment if they returned it. This is not a proven conversion funnel."
+        "Stages are heuristics on the relevant corpus. A review can mention purchase and still be tagged abandonment if they returned it. This is not a proven conversion funnel."
     )
     rows = []
     for stage, n in store.stage_counts():

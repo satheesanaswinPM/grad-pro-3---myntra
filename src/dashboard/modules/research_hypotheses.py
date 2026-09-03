@@ -17,7 +17,7 @@ def render(store: Store) -> None:
     st.caption("These are primary-research asks, not product specs and not a discount brief.")
     path = ROOT / "reports" / "research_hypotheses.md"
     if path.exists():
-        with st.expander("Full Phase 5 hypothesis report"):
+        with st.expander("Full hypothesis report"):
             st.markdown(path.read_text(encoding="utf-8"))
 
     for row in store.opportunities[:TOP_HYPOTHESES]:

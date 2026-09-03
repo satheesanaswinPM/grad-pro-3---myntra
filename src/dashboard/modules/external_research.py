@@ -13,7 +13,7 @@ def render(store: Store) -> None:
 
     st.header("External research")
     banner()
-    st.caption("Phase 2 flags destinations mentioned in the text. Phase 3 behaviors add evidence-linked labels.")
+    st.caption("Automated tagging flags destinations mentioned in the text; AI extraction adds evidence-linked behavior labels.")
     dest: Counter[str] = Counter()
     for row in store.relevant.values():
         for name in str(row.get("external_destinations") or "").split("|"):

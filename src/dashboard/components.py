@@ -19,13 +19,9 @@ def status_label(status: str) -> str:
 
 
 def banner() -> None:
-    import streamlit as st
-
-    st.info(
-        "Part 1 is discovery only. Conversion links are **hypotheses** (this scrape has no purchase outcomes). "
-        "Discounts, coupons, cashback, and markdowns are not the primary recommendation. "
-        "Every percentage uses the **relevant** corpus unless a row names another denominator."
-    )
+    """No-op: the discovery-scope disclaimer was removed from the frontend. Kept as a function
+    so every module's existing banner() call site doesn't need to change."""
+    return
 
 
 def quote_cards(insights: list[dict[str, Any]], empty: str = "No verbatim evidence in this slice.") -> None:

@@ -11,11 +11,11 @@ def render(store: Store) -> None:
 
     st.header("Wishlist intent")
     banner()
-    st.caption("Intent labels come from Phase 3 extractions. They are not a finding until they recur with evidence.")
+    st.caption("Intent labels come from AI extractions. They are not a finding until they recur with evidence.")
     intents = store.themes_for("intent")
     theme_table(intents)
     if not intents:
-        st.warning("No intent themes. Re-run Phase 3–4.")
+        st.warning("No intent themes. Re-run extraction and synthesis.")
         return
     labels = [str(row.get("theme_id")) for row in intents]
     chosen = st.selectbox("Open intent evidence", labels)
