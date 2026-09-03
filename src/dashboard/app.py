@@ -55,7 +55,7 @@ def main() -> None:
     st.set_page_config(page_title="Wishlist discovery console", layout="wide")
     theme.inject_css()
     st.sidebar.title("Discovery console")
-    st.sidebar.caption("Myntra Growth · Part 1 · evidence over guesses")
+    st.sidebar.caption("Myntra Growth · evidence over guesses")
     labels = [name for name, _fn in PAGES]
     if st.session_state.get("nav") not in labels:
         st.session_state["nav"] = labels[0]
