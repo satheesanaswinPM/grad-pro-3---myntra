@@ -107,15 +107,15 @@ def test_flatten_and_confidence() -> None:
 def test_groq_key_uses_groq_endpoint() -> None:
     from src.analyze.llm import llm_config
 
-    old = {k: os.environ.get(k) for k in ("OPENAI_API_KEY", "OPENAI_BASE_URL", "LLM_MODEL")}
+    old = {k: os.environ.get(k) for k in ("GROQ_API_KEY", "GROQ_BASE_URL", "LLM_MODEL")}
     try:
-        os.environ["OPENAI_API_KEY"] = "gsk_dummy_not_a_real_key"
-        os.environ["OPENAI_BASE_URL"] = ""
+        os.environ["GROQ_API_KEY"] = "gsk_dummy_not_a_real_key"
+        os.environ["GROQ_BASE_URL"] = ""
         os.environ["LLM_MODEL"] = "gpt-4o-mini"
         cfg = llm_config()
         _assert(cfg is not None, "dummy groq key should enable llm")
-        _assert("api.groq.com" in cfg["base_url"], "gsk_ key must not hit api.openai.com")
-        _assert(cfg["model"] == "openai/gpt-oss-20b", "gsk_ key should remap gpt-4o-mini to a Groq model")
+        _assert("api.groq.com" in cfg["base_url"], "client must always hit api.groq.com, never OpenAI")
+        _assert(cfg["model"] == "openai/gpt-oss-20b", "a stale OpenAI model name should remap to a Groq model")
     finally:
         for key, value in old.items():
             if value is None:
@@ -161,7 +161,7 @@ def test_llm_smoke() -> None:
 
     load_dotenv()
     cfg = llm_config()
-    _assert(cfg is not None, "OPENAI_API_KEY is not set")
+    _assert(cfg is not None, "GROQ_API_KEY is not set")
     text = "I added this kurta to my wishlist. Reviews say it runs small and I am not sure it will fit."
     parsed = chat_json(request_body([{"record_id": "smoke1", "text": text}], cfg["model"]))
     by_id = records_by_id(parsed, [{"record_id": "smoke1"}])

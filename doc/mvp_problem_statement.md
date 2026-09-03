@@ -44,9 +44,9 @@ and gets an AI agent's help actually resolving the comparison in-app.
   such as Tops/Kurtas, in-stock only) so comparisons in the UI are apples-to-apples, not 15,000 random
   SKUs. Do not hand-write mock products.
 - **LLM client:** reuse `src/analyze/llm.py`, specifically `chat_json(messages_body: dict) -> dict`. It
-  already handles OpenAI/Groq-compatible endpoints, retries, and JSON-content parsing from environment
-  variables (`OPENAI_API_KEY`, `OPENAI_BASE_URL`, `LLM_MODEL`). Do not hardcode API keys; do not build a
-  second LLM client.
+  already handles the Groq chat completions endpoint, retries, and JSON-content parsing from environment
+  variables (`GROQ_API_KEY`, `GROQ_BASE_URL`, `LLM_MODEL`). Groq only -- no OpenAI endpoint. Do not
+  hardcode API keys; do not build a second LLM client.
 
 ## 4. Tech stack & module layout
 

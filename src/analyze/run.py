@@ -175,7 +175,7 @@ def _choose_backend() -> tuple[dict[str, str] | None, str]:
         return None, "local"
     if mode == "llm":
         if not cfg:
-            raise RuntimeError("EXTRACT_BACKEND=llm requires OPENAI_API_KEY")
+            raise RuntimeError("EXTRACT_BACKEND=llm requires GROQ_API_KEY")
         return cfg, "llm"
     if mode not in {"", "auto"}:
         raise RuntimeError(f"Unknown EXTRACT_BACKEND={mode}. Use auto, local, or llm.")

@@ -146,7 +146,7 @@ def render_wishlist() -> None:
         ]
         if not agent.available():
             st.caption(
-                "⚠️ OPENAI_API_KEY is not set, so the comparison agent can't run yet. "
+                "⚠️ GROQ_API_KEY is not set, so the comparison agent can't run yet. "
                 "Set it in `.env` to enable “Help me decide.”"
             )
         help_disabled = len(selected_ids) < 2 or not agent.available()

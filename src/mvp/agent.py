@@ -59,7 +59,7 @@ def build_request(entries: list[dict[str, Any]]) -> dict[str, Any]:
         raise AgentError("Need at least two items to compare.")
     cfg = llm_config()
     if not cfg:
-        raise AgentError("OPENAI_API_KEY is not set -- the agent has no model to call.")
+        raise AgentError("GROQ_API_KEY is not set -- the agent has no model to call.")
     items_block = "\n\n".join(_item_block(e) for e in entries)
     schema = (
         '{"summary": "...", "items": [{"id": "<catalog id>", '

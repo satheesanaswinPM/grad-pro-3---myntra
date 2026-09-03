@@ -261,7 +261,7 @@ Re-run from the project root (reads `data/processed/relevant.parquet` only):
 python -m src.analyze
 ```
 
-If `OPENAI_API_KEY` is set, unique texts are batched to the LLM and cached in `data/cache/llm.sqlite`. Otherwise a span-grounded local extractor runs. Either backend drops a row if it cannot quote a verbatim `evidence_span`.
+If `GROQ_API_KEY` is set, unique texts are batched to the LLM (Groq's OpenAI-compatible chat completions API, default model `openai/gpt-oss-20b`) and cached in `data/cache/llm.sqlite`. Otherwise a span-grounded local extractor runs. Either backend drops a row if it cannot quote a verbatim `evidence_span`.
 
 **Artifacts**
 
@@ -566,8 +566,9 @@ New phases keep this shape: `src/<package>/` with `__main__.py` + `run.py`, a `s
 - Cache expensive AI operations. Hash text + prompt version; skip cache hits.
 - Log AI processing failures.
 - Allow the dataset to be refreshed/reprocessed later.
+- LLM calls go through Groq only (`GROQ_API_KEY`, OpenAI-compatible chat completions API at `https://api.groq.com/openai/v1`, default model `openai/gpt-oss-20b`). No OpenAI endpoint, no per-request provider switching — `src/analyze/llm.py` is the single client both the discovery pipeline and the MVP agent share.
 
-**Implementation note:** A practical split is a Python batch pipeline (Polars or DuckDB for large tables) plus a research console (Streamlit or a small FastAPI UI). The architecture does not depend on a specific LLM vendor.
+**Implementation note:** A practical split is a Python batch pipeline (Polars or DuckDB for large tables) plus a research console (Streamlit or a small FastAPI UI).
 
 ---
 

@@ -1,4 +1,8 @@
-"""OpenAI-compatible chat client. Keys come from the environment only."""
+"""Groq (OpenAI-compatible chat completions API) client. Keys come from the environment only.
+
+Groq only, by design -- no OpenAI endpoint, no provider auto-detection. Any OpenAI-compatible
+Groq-hosted model works by setting LLM_MODEL; the client itself does not depend on which one.
+"""
 
 from __future__ import annotations
 
@@ -20,6 +24,7 @@ WAIT_IN = re.compile(
 )
 GROQ_BASE = "https://api.groq.com/openai/v1"
 GROQ_MODEL = "openai/gpt-oss-20b"
+STALE_MODEL_PREFIXES = ("gpt-3", "gpt-4", "text-", "davinci")
 
 
 def redact(text: str) -> str:
@@ -27,16 +32,13 @@ def redact(text: str) -> str:
 
 
 def llm_config() -> dict[str, str] | None:
-    key = (os.environ.get("OPENAI_API_KEY") or os.environ.get("LLM_API_KEY") or "").strip()
+    key = (os.environ.get("GROQ_API_KEY") or os.environ.get("LLM_API_KEY") or "").strip()
     if not key:
         return None
-    groq = key.startswith("gsk_")
-    base_url = (os.environ.get("OPENAI_BASE_URL") or "").strip().rstrip("/")
-    if not base_url:
-        base_url = GROQ_BASE if groq else "https://api.openai.com/v1"
+    base_url = (os.environ.get("GROQ_BASE_URL") or "").strip().rstrip("/") or GROQ_BASE
     model = (os.environ.get("LLM_MODEL") or "").strip()
-    if not model or (groq and (model.startswith("gpt-4") or model.startswith("llama-"))):
-        model = GROQ_MODEL if groq else (model or "gpt-4o-mini")
+    if not model or model.startswith(STALE_MODEL_PREFIXES):
+        model = GROQ_MODEL
     return {
         "api_key": key,
         "base_url": base_url,
@@ -78,7 +80,7 @@ def parse_json_content(content: Any) -> dict[str, Any]:
 def chat_json(messages_body: dict[str, Any], timeout: int = 90) -> dict[str, Any]:
     cfg = llm_config()
     if not cfg:
-        raise RuntimeError("OPENAI_API_KEY is not set")
+        raise RuntimeError("GROQ_API_KEY is not set")
     url = f"{cfg['base_url']}/chat/completions"
     data = json.dumps(messages_body).encode("utf-8")
     last_error: Exception | None = None
