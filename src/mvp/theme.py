@@ -1,0 +1,195 @@
+"""Visual reskin matching the Stitch-generated reference design ("Elevated Runway Commerce").
+
+Scoped entirely to this app's own page via st.markdown -- each Streamlit app is its own process,
+so this never touches the separate research console (src/dashboard/), which keeps its own dark
+theme. This is a CSS-only reskin, not a rebuild: every interactive element stays a real Streamlit
+widget wired to the existing Python logic in state.py/agent.py/catalog.py. Palette and type scale
+taken directly from the Stitch DESIGN.md.
+"""
+
+from __future__ import annotations
+
+import streamlit as st
+
+PRIMARY = "#D82054"
+INK = "#282C3F"
+MUTED = "#535766"
+SURFACE = "#FFFFFF"
+SURFACE_SOFT = "#F5F5F6"
+BORDER = "#EAEAEC"
+SUCCESS = "#006540"
+
+CSS = f"""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {{
+  --primary: {PRIMARY};
+  --ink: {INK};
+  --muted: {MUTED};
+  --surface: {SURFACE};
+  --surface-soft: {SURFACE_SOFT};
+  --border: {BORDER};
+}}
+
+/* Base type -- !important because Streamlit's own stylesheet loads with equal-specificity
+   selectors later in source order and would otherwise win the cascade over an injected style tag */
+html, body, [class*="css"], [data-testid="stAppViewContainer"], .stApp,
+.stMarkdown, .stMarkdown p, .stMarkdown li, [data-testid="stCaptionContainer"],
+.stButton button, .stTextInput input, .stNumberInput input, .stSelectbox,
+[data-testid="stMetricLabel"], [data-testid="stMetricValue"] {{
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}}
+.stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"] {{
+  background-color: var(--surface) !important;
+}}
+
+/* Headlines -- Bebas Neue, uppercase, condensed, matching the Stitch type scale */
+h1, h2, h3,
+[data-testid="stMarkdownContainer"] h1,
+[data-testid="stMarkdownContainer"] h2,
+[data-testid="stMarkdownContainer"] h3,
+[data-testid="stHeading"] {{
+  font-family: 'Bebas Neue', sans-serif !important;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink) !important;
+}}
+
+/* Primary buttons -- solid pink CTA, matches "BUY THIS ONE" / "SAVE TO WISHLIST" */
+.stButton > button[kind="primary"],
+.stFormSubmitButton > button[kind="primary"] {{
+  background-color: var(--primary) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border-radius: 8px !important;
+  padding: 0.6rem 1.2rem !important;
+}}
+.stButton > button[kind="primary"]:hover,
+.stFormSubmitButton > button[kind="primary"]:hover {{
+  background-color: #b1003f !important;
+  color: white !important;
+}}
+.stButton > button[kind="primary"]:disabled {{
+  background-color: var(--border) !important;
+  color: var(--muted) !important;
+}}
+
+/* Secondary buttons -- outlined ink, matches "KEEP" / "REMOVE" */
+.stButton > button[kind="secondary"] {{
+  background-color: var(--surface) !important;
+  border: 1.5px solid var(--ink) !important;
+  color: var(--ink) !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+}}
+.stButton > button[kind="secondary"]:hover {{
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+}}
+
+/* Bordered containers (product cards, comparison cards) */
+div[data-testid="stVerticalBlockBorderWrapper"] {{
+  border-radius: 12px !important;
+  border-color: var(--border) !important;
+  box-shadow: 0 1px 8px rgba(40, 44, 63, 0.05);
+}}
+
+/* Metric stat tiles (Simulated day / Resolved / Still cold) */
+div[data-testid="stMetric"] {{
+  background-color: var(--surface-soft) !important;
+  border-radius: 10px !important;
+  padding: 0.75rem 0.9rem !important;
+  border: 1px solid var(--border) !important;
+}}
+div[data-testid="stMetricLabel"] {{
+  color: var(--muted) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}}
+
+/* Radio pills (reason chips) -- native accent-color for a pink selection dot */
+div[data-testid="stRadio"] label {{
+  accent-color: var(--primary);
+}}
+div[data-testid="stRadio"] > div {{
+  gap: 0.4rem;
+}}
+
+/* Tabs -- pink active state */
+.stTabs [data-baseweb="tab-list"] button[aria-selected="true"] p {{
+  color: var(--primary) !important;
+}}
+.stTabs [data-baseweb="tab-highlight"] {{
+  background-color: var(--primary) !important;
+}}
+
+/* Alerts -- rounded, softer corners to match card language */
+div[data-testid="stAlert"] {{
+  border-radius: 12px !important;
+}}
+
+/* Sidebar */
+[data-testid="stSidebar"] {{
+  background-color: var(--surface-soft) !important;
+  border-right: 1px solid var(--border);
+}}
+[data-testid="stSidebar"] h1 {{
+  color: var(--primary) !important;
+}}
+
+/* Inputs */
+div[data-baseweb="select"] > div,
+input {{
+  border-radius: 8px !important;
+}}
+
+/* Force light widget chrome regardless of Streamlit's own dark/light auto-detection --
+   this app must always render the Myntra-light look, independent of OS color-scheme.
+   (The separate research console keeps whatever theme it already has -- this CSS is
+   injected only into this app's own page and never reaches that one.) */
+[data-testid="stHeader"] {{
+  background-color: var(--surface) !important;
+}}
+[data-testid="stSelectbox"] div,
+[data-testid="stNumberInput"] div,
+[data-testid="stNumberInput"] input,
+[data-testid="stTextInput"] div,
+[data-testid="stTextInput"] input,
+[data-testid="stMultiSelect"] div {{
+  background-color: var(--surface) !important;
+  color: var(--ink) !important;
+  border-color: var(--border) !important;
+}}
+[data-testid="stSelectbox"] svg,
+[data-testid="stNumberInput"] svg {{
+  fill: var(--ink) !important;
+}}
+/* BaseWeb portals (dropdown option lists) render outside the normal component tree */
+div[data-baseweb="popover"] li,
+div[data-baseweb="menu"],
+ul[role="listbox"] {{
+  background-color: var(--surface) !important;
+  color: var(--ink) !important;
+}}
+</style>
+"""
+
+
+def inject_css() -> None:
+    st.markdown(CSS, unsafe_allow_html=True)
+
+
+def pill(text: str, *, kind: str = "neutral") -> str:
+    """Small rounded badge, e.g. the reason tag on a wishlist row or a staleness flag.
+    kind: 'primary' (pink, e.g. recommended/nudge) | 'neutral' (gray, e.g. a reason tag)."""
+    bg = "#FCE4EC" if kind == "primary" else SURFACE_SOFT
+    color = PRIMARY if kind == "primary" else MUTED
+    return (
+        f'<span style="display:inline-block;background:{bg};color:{color};'
+        f'font-size:0.72rem;font-weight:700;letter-spacing:0.02em;text-transform:uppercase;'
+        f'padding:0.15rem 0.55rem;border-radius:999px;border:1px solid {BORDER};">{text}</span>'
+    )

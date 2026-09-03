@@ -18,7 +18,7 @@ if str(ROOT) not in sys.path:
 import streamlit as st
 
 from src.ingest.env import load_dotenv
-from src.mvp import agent, catalog, state
+from src.mvp import agent, catalog, state, theme
 from src.mvp.state import REASON_LABELS, NUDGE_THRESHOLD_DAYS
 
 
@@ -67,7 +67,7 @@ def render_browse(items: list[dict[str, Any]]) -> None:
                                 key=f"reason_{product['id']}",
                                 horizontal=False,
                             )
-                            submitted = st.form_submit_button("Add to wishlist")
+                            submitted = st.form_submit_button("Add to wishlist", type="primary")
                             if submitted:
                                 state.add_item(product, reason)
                                 st.rerun()
@@ -77,10 +77,14 @@ def _comparison_row(item_id: str, entry: dict[str, Any], *, stale: bool) -> bool
     product = entry["product"]
     held = state.days_held(entry)
     since = state.days_since_engaged(entry)
-    label = f"**{product['title']}** ({product['brand']}, {_price(product['price'])}) — held {held}d"
+    selected = st.checkbox(
+        f"**{product['title']}** ({product['brand']}, {_price(product['price'])}) — held {held}d",
+        value=True,
+        key=f"select_{item_id}",
+    )
     if stale:
-        label += f" · :orange[no activity for {since}d]"
-    return st.checkbox(label, value=True, key=f"select_{item_id}")
+        st.markdown(theme.pill(f"no activity for {since}d", kind="primary"), unsafe_allow_html=True)
+    return selected
 
 
 def _render_agent_result(result: dict[str, Any], entries: dict[str, dict[str, Any]]) -> None:
@@ -90,20 +94,20 @@ def _render_agent_result(result: dict[str, Any], entries: dict[str, dict[str, An
         item_id = str(row.get("id"))
         entry = entries.get(item_id)
         title = entry["product"]["title"] if entry else item_id
-        badge = " ⭐ recommended" if row.get("recommended") else ""
-        st.markdown(f"**{title}**{badge}")
+        badge = " " + theme.pill("Recommended", kind="primary") if row.get("recommended") else ""
+        st.markdown(f"**{title}**{badge}", unsafe_allow_html=True)
         st.write(row.get("fit_for_stated_reason", ""))
         if entry is not None:
             c1, c2, c3 = st.columns(3)
-            if c1.button("Buy this one", key=f"buy_{item_id}"):
+            if c1.button("Buy this one", key=f"buy_{item_id}", type="primary"):
                 state.record_decision(item_id, "buy")
                 st.session_state.pop("last_comparison", None)
                 st.rerun()
-            if c2.button("Keep comparing", key=f"keep_{item_id}"):
+            if c2.button("Keep comparing", key=f"keep_{item_id}", type="secondary"):
                 state.record_decision(item_id, "keep")
                 st.session_state.pop("last_comparison", None)
                 st.rerun()
-            if c3.button("Remove from wishlist", key=f"remove_{item_id}"):
+            if c3.button("Remove from wishlist", key=f"remove_{item_id}", type="secondary"):
                 state.record_decision(item_id, "removed")
                 st.session_state.pop("last_comparison", None)
                 st.rerun()
@@ -171,11 +175,12 @@ def render_wishlist() -> None:
         for item_id, entry in others.items():
             product = entry["product"]
             cols = st.columns([5, 1])
-            cols[0].write(
+            cols[0].markdown(
                 f"**{product['title']}** ({product['brand']}, {_price(product['price'])}) — "
-                f"{REASON_LABELS[entry['reason']]}, held {state.days_held(entry)}d"
+                f"held {state.days_held(entry)}d &nbsp; {theme.pill(REASON_LABELS[entry['reason']])}",
+                unsafe_allow_html=True,
             )
-            if cols[1].button("Remove", key=f"remove_other_{item_id}"):
+            if cols[1].button("Remove", key=f"remove_other_{item_id}", type="secondary"):
                 state.record_decision(item_id, "removed")
                 st.rerun()
 
@@ -202,6 +207,7 @@ def render_sidebar() -> None:
 def main() -> None:
     load_dotenv()
     st.set_page_config(page_title="Decide -- Wishlist Comparison Agent", layout="wide")
+    theme.inject_css()
     state.init_state()
     render_sidebar()
 
