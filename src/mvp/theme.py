@@ -38,12 +38,22 @@ CSS = f"""
 }}
 
 /* Base type -- !important because Streamlit's own stylesheet loads with equal-specificity
-   selectors later in source order and would otherwise win the cascade over an injected style tag */
+   selectors later in source order and would otherwise win the cascade over an injected style tag.
+   color is forced here too: Streamlit's dark-mode auto-detection (see below) sets light default
+   text, which against this app's forced-white background was rendering as invisible white-on-white. */
 html, body, [class*="css"], [data-testid="stAppViewContainer"], .stApp,
-.stMarkdown, .stMarkdown p, .stMarkdown li, [data-testid="stCaptionContainer"],
+.stMarkdown, .stMarkdown p, .stMarkdown li, .stMarkdown span,
+[data-testid="stCaptionContainer"], [data-testid="stCaptionContainer"] p,
+[data-testid="stWidgetLabel"] p, [data-testid="stWidgetLabel"] label,
+[data-testid="stCheckbox"] label p, [data-testid="stRadio"] label p,
+.stTabs [data-baseweb="tab-list"] button p,
 .stButton button, .stTextInput input, .stNumberInput input, .stSelectbox,
 [data-testid="stMetricLabel"], [data-testid="stMetricValue"] {{
   font-family: 'Plus Jakarta Sans', -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+  color: var(--ink) !important;
+}}
+[data-testid="stCaptionContainer"], [data-testid="stCaptionContainer"] p {{
+  color: var(--muted) !important;
 }}
 .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"] {{
   background-color: var(--surface) !important;
