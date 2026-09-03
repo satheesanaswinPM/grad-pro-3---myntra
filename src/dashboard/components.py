@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from src.dashboard import theme
 from src.dashboard.load import Store, mix_dict, split_ids
 
 
@@ -34,18 +35,28 @@ def quote_cards(insights: list[dict[str, Any]], empty: str = "No verbatim eviden
         st.caption(empty)
         return
     for item in insights:
-        st.markdown(
-            f"**{item.get('extractor')}:{item.get('label')}** · {item.get('source')} · "
-            f"{item.get('category')} · {item.get('journey_stage')} · {status_label(str(item.get('status')))} · "
-            f"`{item.get('record_id')}`"
-        )
-        st.markdown(f"> {item.get('evidence_snippet')}")
-        interp = str(item.get("ai_interpretation") or "").strip()
-        if interp:
-            st.caption(f"Interpretation (not the quote): {interp}")
-        with st.expander("Full feedback text"):
-            st.write(item.get("text") or "")
-        st.divider()
+        with st.container(border=True):
+            meta = " · ".join(
+                theme.meta_tag(str(v))
+                for v in (
+                    f"{item.get('extractor')}:{item.get('label')}",
+                    item.get("source"),
+                    item.get("category"),
+                    item.get("journey_stage"),
+                )
+                if v
+            )
+            st.markdown(
+                f"{meta} · {theme.status_pill(str(item.get('status')))} "
+                f"{theme.meta_tag(str(item.get('record_id')))}",
+                unsafe_allow_html=True,
+            )
+            st.markdown(f"> {item.get('evidence_snippet')}")
+            interp = str(item.get("ai_interpretation") or "").strip()
+            if interp:
+                st.caption(f"INTERPRETATION (NOT THE QUOTE): {interp}")
+            with st.expander("Full feedback text"):
+                st.write(item.get("text") or "")
 
 
 def open_evidence(record_ids: list[str], title: str, theme_ids: str = "", extractor: str = "") -> bool:

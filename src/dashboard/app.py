@@ -11,6 +11,7 @@ if str(ROOT) not in sys.path:
 
 import streamlit as st
 
+from src.dashboard import theme
 from src.dashboard.load import Store
 from src.dashboard.modules import (
     category_analysis,
@@ -52,6 +53,7 @@ def load_store() -> Store:
 
 def main() -> None:
     st.set_page_config(page_title="Wishlist discovery console", layout="wide")
+    theme.inject_css()
     st.sidebar.title("Discovery console")
     st.sidebar.caption("Myntra Growth · Part 1 · evidence over guesses")
     labels = [name for name, _fn in PAGES]
