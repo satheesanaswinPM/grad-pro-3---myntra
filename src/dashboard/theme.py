@@ -24,10 +24,15 @@ TEXT_PRIMARY = "#F8FAFC"
 TEXT_SECONDARY = "#94A3B8"
 TEXT_DIM = "#64748B"
 
+FONT_LINKS = (
+    '<link rel="preconnect" href="https://fonts.googleapis.com">'
+    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+    '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family='
+    'JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">'
+)
+
 CSS = f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
-
 :root {{
   --canvas: {CANVAS};
   --surface-1: {SURFACE_1};
@@ -44,7 +49,7 @@ CSS = f"""
 /* Base type -- Inter for structure, everywhere else falls back to it */
 html, body, [class*="css"], [data-testid="stAppViewContainer"], .stApp,
 .stMarkdown, .stMarkdown p, .stMarkdown li, [data-testid="stCaptionContainer"] {{
-  font-family: 'Inter', sans-serif !important;
+  font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
   color: var(--text) !important;
 }}
 .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"], [data-testid="stHeader"] {{
@@ -56,7 +61,7 @@ h1, h2, h3, h4,
 [data-testid="stMarkdownContainer"] h1,
 [data-testid="stMarkdownContainer"] h2,
 [data-testid="stMarkdownContainer"] h3 {{
-  font-family: 'Inter', sans-serif !important;
+  font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
   font-weight: 600 !important;
   letter-spacing: -0.01em;
   color: var(--text) !important;
@@ -65,7 +70,7 @@ h1, h2, h3, h4,
 /* Monospace for data: metrics, dataframes, code, captions carrying record ids/labels */
 [data-testid="stMetricValue"], [data-testid="stMetricLabel"], [data-testid="stMetricDelta"],
 .stDataFrame, .stDataFrame *, code, [data-testid="stCaptionContainer"] {{
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace !important;
 }}
 
 /* Sidebar */
@@ -75,7 +80,7 @@ h1, h2, h3, h4,
 }}
 [data-testid="stSidebar"] h1 {{
   color: var(--primary) !important;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace !important;
   font-weight: 600 !important;
 }}
 [data-testid="stSidebar"] [data-testid="stCaptionContainer"] {{
@@ -137,7 +142,7 @@ div[data-testid="stAlert"] p {{
   border: 1px solid var(--border-strong) !important;
   color: var(--text) !important;
   border-radius: 4px !important;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace !important;
 }}
 .stButton > button:hover {{
   border-color: var(--primary) !important;
@@ -162,7 +167,7 @@ div[data-testid="stExpander"] {{
 }}
 div[data-testid="stExpander"] summary {{
   color: var(--text-secondary) !important;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace !important;
   font-size: 0.85rem;
 }}
 
@@ -173,7 +178,7 @@ div[data-baseweb="select"] div, [data-testid="stTextInput"] input,
   color: var(--text) !important;
   border-color: var(--border-strong) !important;
   border-radius: 4px !important;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace !important;
 }}
 div[data-baseweb="popover"] li, div[data-baseweb="menu"], ul[role="listbox"] {{
   background-color: var(--surface-2) !important;
@@ -197,6 +202,10 @@ div[data-baseweb="popover"] li, div[data-baseweb="menu"], ul[role="listbox"] {{
 
 
 def inject_css() -> None:
+    # Real <link> tags, not a CSS @import inside a dynamically-injected <style> block --
+    # @import set via innerHTML/unsafe_allow_html is unreliable across browsers and can
+    # silently fail to fetch even when the rest of the stylesheet applies fine.
+    st.markdown(FONT_LINKS, unsafe_allow_html=True)
     st.markdown(CSS, unsafe_allow_html=True)
 
 

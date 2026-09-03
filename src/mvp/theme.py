@@ -19,10 +19,15 @@ SURFACE_SOFT = "#F5F5F6"
 BORDER = "#EAEAEC"
 SUCCESS = "#006540"
 
+FONT_LINKS = (
+    '<link rel="preconnect" href="https://fonts.googleapis.com">'
+    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+    '<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:'
+    'wght@400;500;600;700&display=swap" rel="stylesheet">'
+)
+
 CSS = f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-
 :root {{
   --primary: {PRIMARY};
   --ink: {INK};
@@ -38,7 +43,7 @@ html, body, [class*="css"], [data-testid="stAppViewContainer"], .stApp,
 .stMarkdown, .stMarkdown p, .stMarkdown li, [data-testid="stCaptionContainer"],
 .stButton button, .stTextInput input, .stNumberInput input, .stSelectbox,
 [data-testid="stMetricLabel"], [data-testid="stMetricValue"] {{
-  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
 }}
 .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"] {{
   background-color: var(--surface) !important;
@@ -50,7 +55,7 @@ h1, h2, h3,
 [data-testid="stMarkdownContainer"] h2,
 [data-testid="stMarkdownContainer"] h3,
 [data-testid="stHeading"] {{
-  font-family: 'Bebas Neue', sans-serif !important;
+  font-family: 'Bebas Neue', Impact, 'Arial Narrow', sans-serif !important;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   color: var(--ink) !important;
@@ -180,6 +185,10 @@ ul[role="listbox"] {{
 
 
 def inject_css() -> None:
+    # Real <link> tags, not a CSS @import inside a dynamically-injected <style> block --
+    # @import set via innerHTML/unsafe_allow_html is unreliable across browsers and can
+    # silently fail to fetch even when the rest of the stylesheet applies fine.
+    st.markdown(FONT_LINKS, unsafe_allow_html=True)
     st.markdown(CSS, unsafe_allow_html=True)
 
 
