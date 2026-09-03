@@ -1,8 +1,8 @@
 # Relevance and journey rules — Phase 2
 
-Generated: 2026-08-19T19:15:38+00:00  
+Generated: 2026-09-03T20:16:25+00:00  
 Input: `data/processed/canonical.parquet` (n = **24575**)  
-Relevant corpus: `data/processed/relevant.parquet` (n = **17495**, 71.19% of canonical)  
+Relevant corpus: `data/processed/relevant.parquet` (n = **17343**, 70.57% of canonical)  
 Journey tags: `data/processed/journey_tags.parquet` (one row per canonical record)
 
 These rules define the **denominator** for later percentages. They do not decide why wishlists fail to convert. Fit, quality, price, and similar phrases are inclusion *signals* to investigate, not assumed root causes.
@@ -12,9 +12,9 @@ These rules define the **denominator** for later percentages. They do not decide
 | Population | n | Definition |
 | --- | --- | --- |
 | all | 24575 | Every CanonicalFeedback row from Phase 1 |
-| relevant | 17495 | Canonical rows that match at least one inclusion rule and no exclusion rule |
+| relevant | 17343 | Canonical rows that match at least one inclusion rule and no exclusion rule |
 | source slice | — | `source` on the canonical row |
-| language slice | — | `language` from Phase 1; non-English rows are **not** dropped |
+| language slice | — | `language` from Phase 1; non-`en`, mixed-dialect, and emoji-only rows are excluded (see below) |
 
 ## Inclusion (OR)
 
@@ -42,6 +42,9 @@ A candidate is dropped if any exclusion fires. Catalog copy is excluded even if 
 | ex_catalog_copy | not_user_feedback | Drop `myntra_catalog` rows: merchant size/fit copy, not user feedback. | 961 |
 | ex_too_short | weak_signal | Drop texts shorter than 20 characters after whitespace collapse. | 341 |
 | ex_app_ops_only | off_journey | Pure app-operations complaints (login, crash, OTP) with no inclusion match. | 5 |
+| ex_emoji_only | not_analyzable | Drop rows with no letters or digits at all (emoji/symbols/punctuation only, no words). | 20 |
+| ex_mixed_dialect | not_analyzable | Drop code-switched rows (Hinglish, or a non-Latin script mixed with Latin) per Phase 1's language tag. | 24 |
+| ex_non_english | not_analyzable | Drop rows whose Phase 1 language tag is not `en` (and not already caught by the two rules above). | 723 |
 
 Minimum text length: **20** characters after whitespace collapse.
 
@@ -58,10 +61,10 @@ This is a **heuristic**. A clothing review that says “I bought it, it runs sma
 | discovery | 88 | 34 |
 | consideration | 181 | 68 |
 | wishlist | 4 | 4 |
-| evaluation | 8472 | 8207 |
-| purchase | 8805 | 6467 |
-| abandonment | 1373 | 1373 |
-| unlabeled | 5652 | 1342 |
+| evaluation | 8472 | 8101 |
+| purchase | 8805 | 6457 |
+| abandonment | 1373 | 1366 |
+| unlabeled | 5652 | 1313 |
 
 Journey rule patterns:
 
@@ -98,24 +101,27 @@ Tagged only when the product field or the text supports it.
 
 | Fashion category (relevant corpus) | Records |
 | --- | --- |
-| Clothing | 13227 |
-| Western wear | 4107 |
-| unlabeled | 143 |
-| Beauty | 12 |
+| Clothing | 13140 |
+| Western wear | 4084 |
+| unlabeled | 102 |
+| Beauty | 11 |
 | Footwear | 4 |
 | Ethnic wear | 2 |
 
-## Language (measured before filtering)
+## Language (measured, then filtered)
 
-Non-English rows stay in canonical and in relevant if they match inclusion rules.
+Every row's language is tagged in Phase 1 regardless of this filter, so the "All" column below still
+shows the full mix. Relevant is now restricted to rows tagged `en`: `ex_non_english`, `ex_mixed_dialect`
+(Hinglish or a non-Latin script mixed with Latin), and `ex_emoji_only` (no letters or digits at all) are
+applied as exclusion rules above, not silently — see the exclusion table for hit counts.
 
 | Language | All | % of all | Relevant |
 | --- | --- | --- | --- |
 | en | 23808 | 96.88 | 17343 |
-| latin-other | 715 | 2.91 | 146 |
-| hinglish | 23 | 0.09 | 5 |
+| latin-other | 715 | 2.91 | 0 |
+| hinglish | 23 | 0.09 | 0 |
 | unknown | 21 | 0.09 | 0 |
-| hi | 6 | 0.02 | 1 |
+| hi | 6 | 0.02 | 0 |
 | kn | 1 | 0.0 | 0 |
 | or+latin | 1 | 0.0 | 0 |
 
@@ -123,17 +129,17 @@ Non-English rows stay in canonical and in relevant if they match inclusion rules
 
 | Source | All | Relevant | Relevant % of source |
 | --- | --- | --- | --- |
-| google_play | 856 | 151 | 17.64 |
-| app_store | 47 | 19 | 40.43 |
-| reddit | 77 | 39 | 50.65 |
-| product_reviews | 22634 | 17286 | 76.37 |
+| google_play | 856 | 111 | 12.97 |
+| app_store | 47 | 14 | 29.79 |
+| reddit | 77 | 34 | 44.16 |
+| product_reviews | 22634 | 17184 | 75.92 |
 | myntra_catalog | 961 | 0 | 0.0 |
 
 ## What Phase 2 did not do
 
 - No LLM extraction, intent taxonomy, or barrier ranking (Phase 3).
 - Did not treat every review as wishlist-relevant.
-- Did not drop non-English rows in order to “clean” the corpus.
+- Did not drop non-English rows for any reason other than the three explicit, reported rules above (non-`en`, mixed-dialect, emoji-only) — this is a stated corpus-scope decision, not silent "cleaning".
 - Did not assume price, size, reviews, or discounts are the conversion problem.
 - Did not write into `data/raw/`.
 

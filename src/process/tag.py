@@ -21,6 +21,16 @@ def collapsed_text(text: str) -> str:
     return " ".join((text or "").split())
 
 
+def is_emoji_only(text: str) -> bool:
+    """True when the row has content but not a single letter or digit -- emoji/symbols/punctuation only."""
+    return bool(text.strip()) and not any(ch.isalnum() for ch in text)
+
+
+def is_mixed_dialect(language: str) -> bool:
+    """True for code-switched text: Hinglish, or a non-Latin script mixed with Latin (Phase 1's `{script}+latin`)."""
+    return language == "hinglish" or language.endswith("+latin")
+
+
 def match_inclusion(text: str) -> list[str]:
     return [rule.id for rule, pattern in COMPILED_INCLUSION if pattern.search(text)]
 
@@ -70,6 +80,7 @@ def _bucket(blob: str) -> str:
 def decide_relevance(row: dict[str, Any]) -> dict[str, Any]:
     text = collapsed_text(str(row.get("text") or ""))
     source = str(row.get("source") or "")
+    language = str(row.get("language") or "unknown")
     inclusion = match_inclusion(text)
     exclusion: list[str] = []
 
@@ -79,6 +90,12 @@ def decide_relevance(row: dict[str, Any]) -> dict[str, Any]:
         exclusion.append("ex_too_short")
     if COMPILED_APP_OPS.search(text) and not inclusion:
         exclusion.append("ex_app_ops_only")
+    if is_emoji_only(text):
+        exclusion.append("ex_emoji_only")
+    elif is_mixed_dialect(language):
+        exclusion.append("ex_mixed_dialect")
+    elif language != "en":
+        exclusion.append("ex_non_english")
 
     is_relevant = bool(inclusion) and not exclusion
     stages = match_journey(text)

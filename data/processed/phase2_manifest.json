@@ -1,27 +1,27 @@
 {
-  "generated_at": "2026-08-19T19:15:38+00:00",
+  "generated_at": "2026-09-03T20:16:25+00:00",
   "n_canonical": 24575,
-  "n_relevant": 17495,
-  "pct_relevant": 71.19,
+  "n_relevant": 17343,
+  "pct_relevant": 70.57,
   "relevant_path": "data/processed/relevant.parquet",
   "journey_path": "data/processed/journey_tags.parquet",
   "rules_path": "reports/relevance_rules.md",
   "by_source": {
     "google_play": {
       "all": 856,
-      "relevant": 151
+      "relevant": 111
     },
     "app_store": {
       "all": 47,
-      "relevant": 19
+      "relevant": 14
     },
     "reddit": {
       "all": 77,
-      "relevant": 39
+      "relevant": 34
     },
     "product_reviews": {
       "all": 22634,
-      "relevant": 17286
+      "relevant": 17184
     },
     "myntra_catalog": {
       "all": 961,

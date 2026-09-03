@@ -25,7 +25,10 @@ def render(store: Store) -> None:
     c3.metric("Records with extractions", f"{extracted:,}", pct(int(extracted), store.n_relevant))
     c4.metric("Ranked opportunities", str(len(store.opportunities)))
 
-    st.caption("Relevant is the denominator for later percentages. Non-English rows were not dropped.")
+    st.caption(
+        "Relevant is the denominator for later percentages. Non-English, code-switched, and "
+        "emoji-only rows are excluded (reports/relevance_rules.md)."
+    )
     st.markdown("**Source mix (relevant)**")
     st.dataframe(
         [{"source": name, "n relevant": n, "% relevant": pct(n, store.n_relevant)} for name, n in store.source_counts()],

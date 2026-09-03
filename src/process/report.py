@@ -86,7 +86,7 @@ These rules define the **denominator** for later percentages. They do not decide
 | all | {n_all} | Every CanonicalFeedback row from Phase 1 |
 | relevant | {n_rel} | Canonical rows that match at least one inclusion rule and no exclusion rule |
 | source slice | — | `source` on the canonical row |
-| language slice | — | `language` from Phase 1; non-English rows are **not** dropped |
+| language slice | — | `language` from Phase 1; non-`en`, mixed-dialect, and emoji-only rows are excluded (see below) |
 
 ## Inclusion (OR)
 
@@ -132,9 +132,12 @@ Tagged only when the product field or the text supports it.
 
 {_md_table(["Fashion category (relevant corpus)", "Records"], cat_rows) if cat_rows else "_No relevant rows._"}
 
-## Language (measured before filtering)
+## Language (measured, then filtered)
 
-Non-English rows stay in canonical and in relevant if they match inclusion rules.
+Every row's language is tagged in Phase 1 regardless of this filter, so the "All" column below still
+shows the full mix. Relevant is now restricted to rows tagged `en`: `ex_non_english`, `ex_mixed_dialect`
+(Hinglish or a non-Latin script mixed with Latin), and `ex_emoji_only` (no letters or digits at all) are
+applied as exclusion rules above, not silently — see the exclusion table for hit counts.
 
 {_md_table(["Language", "All", "% of all", "Relevant"], lang_rows)}
 
@@ -146,7 +149,7 @@ Non-English rows stay in canonical and in relevant if they match inclusion rules
 
 - No LLM extraction, intent taxonomy, or barrier ranking (Phase 3).
 - Did not treat every review as wishlist-relevant.
-- Did not drop non-English rows in order to “clean” the corpus.
+- Did not drop non-English rows for any reason other than the three explicit, reported rules above (non-`en`, mixed-dialect, emoji-only) — this is a stated corpus-scope decision, not silent "cleaning".
 - Did not assume price, size, reviews, or discounts are the conversion problem.
 - Did not write into `data/raw/`.
 

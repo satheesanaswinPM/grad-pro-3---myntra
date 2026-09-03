@@ -102,6 +102,24 @@ EXCLUSION_RULES: tuple[Rule, ...] = (
         r"\blogin\b|\botp\b|\bcrash(?:ed|ing)?\b|\bforce\s+close\b|\bnotification\b|\bupdate\s+(?:the\s+)?app\b|\bwon't\s+open\b|\bcannot\s+open\b|\bplease\s+fix\s+(?:the\s+)?app\b",
         "Pure app-operations complaints (login, crash, OTP) with no inclusion match.",
     ),
+    Rule(
+        "ex_emoji_only",
+        "not_analyzable",
+        r"",
+        "Drop rows with no letters or digits at all (emoji/symbols/punctuation only, no words).",
+    ),
+    Rule(
+        "ex_mixed_dialect",
+        "not_analyzable",
+        r"",
+        "Drop code-switched rows (Hinglish, or a non-Latin script mixed with Latin) per Phase 1's language tag.",
+    ),
+    Rule(
+        "ex_non_english",
+        "not_analyzable",
+        r"",
+        "Drop rows whose Phase 1 language tag is not `en` (and not already caught by the two rules above).",
+    ),
 )
 
 JOURNEY_RULES: tuple[Rule, ...] = (

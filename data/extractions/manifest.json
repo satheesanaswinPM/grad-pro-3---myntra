@@ -1,70 +1,70 @@
 {
-  "generated_at": "2026-08-20T14:00:13+00:00",
+  "generated_at": "2026-09-03T20:17:19+00:00",
   "backend": "local",
   "prompt_version": "span_extract_v2",
   "extract_backend": "local",
-  "n_relevant": 17495,
-  "n_unique_texts": 17495,
+  "n_relevant": 17343,
+  "n_unique_texts": 17343,
   "skipped_hashes": 0,
   "written": {
     "intent": {
       "path": "data/extractions/intents.parquet",
-      "rows": 11649
+      "rows": 11630
     },
     "barrier": {
       "path": "data/extractions/barriers.parquet",
-      "rows": 7822
+      "rows": 7777
     },
     "need": {
       "path": "data/extractions/needs.parquet",
-      "rows": 6673
+      "rows": 6647
     },
     "behavior": {
       "path": "data/extractions/behaviors.parquet",
-      "rows": 820
+      "rows": 811
     }
   },
   "top_labels": {
     "intent": {
-      "strong_purchase": 8477,
-      "price_watch": 1104,
+      "strong_purchase": 8468,
+      "price_watch": 1101,
       "uncertain": 938,
-      "occasion": 595,
-      "comparison": 262,
+      "occasion": 589,
+      "comparison": 261,
       "future_purchase": 134,
       "inspiration": 113,
       "bookmark": 26
     },
     "barrier": {
-      "fit": 2277,
-      "returns": 2164,
-      "fabric": 862,
-      "proof": 469,
-      "other:comfort": 423,
+      "fit": 2266,
+      "returns": 2150,
+      "fabric": 859,
+      "proof": 465,
+      "other:comfort": 421,
       "availability": 332,
       "comparison": 312,
       "other:shrinkage": 228,
       "styling": 216,
-      "quality": 186,
-      "delivery": 157,
+      "quality": 183,
+      "delivery": 151,
       "value": 118,
-      "other:support": 38,
+      "other:support": 36,
       "occasion": 21,
       "trust": 16,
       "other:color": 3
     },
     "need": {
-      "will_it_fit": 2262,
-      "vs_images": 2215,
-      "what_to_pair": 976,
-      "right_for_occasion": 507,
+      "will_it_fit": 2251,
+      "vs_images": 2210,
+      "what_to_pair": 975,
+      "right_for_occasion": 501,
       "better_alternative": 459,
-      "is_quality_worth_it": 254
+      "is_quality_worth_it": 251
     },
     "behavior": {
-      "comparison": 388,
+      "comparison": 387,
       "external:friends_family": 375,
-      "external:other_apps": 41,
+      "external:other_apps": 33,
       "external:instagram": 13,
       "external:google": 2,
       "external:reddit": 1
@@ -72,20 +72,20 @@
   },
   "status_counts": {
     "intent": {
-      "observed_evidence": 9997,
-      "hypothesis": 1652
+      "observed_evidence": 9983,
+      "hypothesis": 1647
     },
     "barrier": {
-      "hypothesis": 2918,
-      "observed_evidence": 4904
+      "hypothesis": 2877,
+      "observed_evidence": 4900
     },
     "need": {
-      "hypothesis": 2982,
-      "observed_evidence": 3691
+      "hypothesis": 2963,
+      "observed_evidence": 3684
     },
     "behavior": {
-      "observed_evidence": 643,
-      "hypothesis": 177
+      "observed_evidence": 641,
+      "hypothesis": 170
     }
   },
   "note": "Labels are not findings until Phase 4\u20135. observed_evidence vs hypothesis is per extraction row."

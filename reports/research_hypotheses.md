@@ -1,6 +1,6 @@
 # Research hypotheses — Phase 5
 
-Generated: 2026-08-20T14:11:33+00:00  
+Generated: 2026-09-03T20:17:35+00:00  
 These are **testable follow-ups for primary research**, not product specs and not a discount brief.
 
 Top 10 ranked opportunities with recurring observed evidence (or the next best rows if fewer).
@@ -9,7 +9,7 @@ Do **not** use discounts, coupons, cashback, or price-offs as the primary soluti
 
 ### H1. `hyp:returns_exchange`
 
-Opportunity: `opp:returns_exchange` (rank 1, total 3.3151, n=2095 relevant)
+Opportunity: `opp:returns_exchange` (rank 1, total 3.3198, n=2084 relevant)
 
 **Hypothesis:** If return friction is part of pre-purchase hesitation, shoppers who expect sending items back to be hard will delay the first order from a wishlist.
 
@@ -21,7 +21,7 @@ Opportunity: `opp:returns_exchange` (rank 1, total 3.3151, n=2095 relevant)
 
 ### H2. `hyp:image_vs_reality`
 
-Opportunity: `opp:image_vs_reality` (rank 2, total 2.9641, n=2023 relevant)
+Opportunity: `opp:image_vs_reality` (rank 2, total 2.9678, n=2018 relevant)
 
 **Hypothesis:** If missing visual proof blocks conversion, wishlisters who cannot tell whether the item matches the photos will delay or abandon the buy.
 
@@ -33,7 +33,7 @@ Opportunity: `opp:image_vs_reality` (rank 2, total 2.9641, n=2023 relevant)
 
 ### H3. `hyp:price_watch`
 
-Opportunity: `opp:price_watch` (rank 3, total 2.8314, n=1143 relevant)
+Opportunity: `opp:price_watch` (rank 3, total 2.8338, n=1140 relevant)
 
 **Hypothesis:** If price-watch language is a proxy for unresolved value, the open question is whether the item is worth it, not whether a markdown exists.
 
@@ -45,7 +45,7 @@ Opportunity: `opp:price_watch` (rank 3, total 2.8314, n=1143 relevant)
 
 ### H4. `hyp:comparison_loop`
 
-Opportunity: `opp:comparison_loop` (rank 4, total 2.8031, n=523 relevant)
+Opportunity: `opp:comparison_loop` (rank 4, total 2.8045, n=522 relevant)
 
 **Hypothesis:** If comparison loops delay conversion, people who are evaluating alternatives will leave the wishlisted item unbought until the comparison is resolved.
 
@@ -57,7 +57,7 @@ Opportunity: `opp:comparison_loop` (rank 4, total 2.8031, n=523 relevant)
 
 ### H5. `hyp:fit_uncertainty`
 
-Opportunity: `opp:fit_uncertainty` (rank 5, total 2.7321, n=2143 relevant)
+Opportunity: `opp:fit_uncertainty` (rank 5, total 2.7351, n=2132 relevant)
 
 **Hypothesis:** If fit uncertainty is a purchase-delay mechanism, people who cannot map size information to their body will keep items wishlisted rather than buying within 30 days.
 
@@ -69,7 +69,7 @@ Opportunity: `opp:fit_uncertainty` (rank 5, total 2.7321, n=2143 relevant)
 
 ### H6. `hyp:intent:uncertain`
 
-Opportunity: `opp:intent:uncertain` (rank 6, total 2.6126, n=889 relevant)
+Opportunity: `opp:intent:uncertain` (rank 6, total 2.6148, n=889 relevant)
 
 **Hypothesis:** If unresolved intent is a conversion delay, people who say they are unsure after wishlisting will not buy within 30 days until that uncertainty is closed.
 
@@ -81,7 +81,7 @@ Opportunity: `opp:intent:uncertain` (rank 6, total 2.6126, n=889 relevant)
 
 ### H7. `hyp:styling_uncertainty`
 
-Opportunity: `opp:styling_uncertainty` (rank 7, total 2.5681, n=894 relevant)
+Opportunity: `opp:styling_uncertainty` (rank 7, total 2.5704, n=893 relevant)
 
 **Hypothesis:** If styling uncertainty delays purchase, shoppers who cannot picture how to wear the item will not convert from wishlist within 30 days.
 
@@ -93,7 +93,7 @@ Opportunity: `opp:styling_uncertainty` (rank 7, total 2.5681, n=894 relevant)
 
 ### H8. `hyp:barrier:availability`
 
-Opportunity: `opp:barrier:availability` (rank 8, total 2.4774, n=322 relevant)
+Opportunity: `opp:barrier:availability` (rank 8, total 2.4782, n=322 relevant)
 
 **Hypothesis:** If availability is a purchase-delay mechanism, people who mention it in relevant feedback will be less likely to buy a wishlisted item within 30 days. This conversion link is unproven.
 
@@ -105,7 +105,7 @@ Opportunity: `opp:barrier:availability` (rank 8, total 2.4774, n=322 relevant)
 
 ### H9. `hyp:barrier:delivery`
 
-Opportunity: `opp:barrier:delivery` (rank 9, total 2.3956, n=149 relevant)
+Opportunity: `opp:barrier:delivery` (rank 9, total 2.3753, n=143 relevant)
 
 **Hypothesis:** If delivery is a purchase-delay mechanism, people who mention it in relevant feedback will be less likely to buy a wishlisted item within 30 days. This conversion link is unproven.
 
@@ -117,7 +117,7 @@ Opportunity: `opp:barrier:delivery` (rank 9, total 2.3956, n=149 relevant)
 
 ### H10. `hyp:external_research`
 
-Opportunity: `opp:external_research` (rank 10, total 2.3578, n=407 relevant)
+Opportunity: `opp:external_research` (rank 10, total 2.3603, n=400 relevant)
 
 **Hypothesis:** If off-platform research is a conversion gate, wishlisters who go to friends, Google, Reddit, or other apps will not buy until that research is done.
 

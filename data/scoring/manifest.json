@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-20T14:11:33+00:00",
+  "generated_at": "2026-09-03T20:17:35+00:00",
   "formula_version": "score_v1",
-  "n_relevant": 17495,
+  "n_relevant": 17343,
   "n_opportunities": 20,
   "n_observed_opportunities": 19,
   "n_hypotheses": 10,
@@ -12,41 +12,41 @@
     {
       "rank": 1,
       "opportunity_id": "opp:returns_exchange",
-      "total_score": 3.3151,
-      "unique_records": 2095,
-      "pct_relevant": 11.9748,
+      "total_score": 3.3198,
+      "unique_records": 2084,
+      "pct_relevant": 12.0164,
       "status": "observed_evidence"
     },
     {
       "rank": 2,
       "opportunity_id": "opp:image_vs_reality",
-      "total_score": 2.9641,
-      "unique_records": 2023,
-      "pct_relevant": 11.5633,
+      "total_score": 2.9678,
+      "unique_records": 2018,
+      "pct_relevant": 11.6358,
       "status": "observed_evidence"
     },
     {
       "rank": 3,
       "opportunity_id": "opp:price_watch",
-      "total_score": 2.8314,
-      "unique_records": 1143,
-      "pct_relevant": 6.5333,
+      "total_score": 2.8338,
+      "unique_records": 1140,
+      "pct_relevant": 6.5733,
       "status": "observed_evidence"
     },
     {
       "rank": 4,
       "opportunity_id": "opp:comparison_loop",
-      "total_score": 2.8031,
-      "unique_records": 523,
-      "pct_relevant": 2.9894,
+      "total_score": 2.8045,
+      "unique_records": 522,
+      "pct_relevant": 3.0099,
       "status": "observed_evidence"
     },
     {
       "rank": 5,
       "opportunity_id": "opp:fit_uncertainty",
-      "total_score": 2.7321,
-      "unique_records": 2143,
-      "pct_relevant": 12.2492,
+      "total_score": 2.7351,
+      "unique_records": 2132,
+      "pct_relevant": 12.2931,
       "status": "observed_evidence"
     }
   ],

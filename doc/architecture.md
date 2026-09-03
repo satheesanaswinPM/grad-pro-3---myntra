@@ -214,6 +214,7 @@ python -m src.ingest.build
 2. Tag journey stage: Discovery → Consideration → Wishlist → Evaluation → Purchase / Abandonment.
 3. Flag external-research mentions (Google, Reddit, YouTube, Instagram, friends, other apps).
 4. Tag fashion category only where the data supports it.
+5. Exclude rows the analysis engine cannot reliably read: emoji/symbol-only text (`ex_emoji_only`), code-switched text — Hinglish or a non-Latin script mixed with Latin (`ex_mixed_dialect`) — and any other non-`en` language tag (`ex_non_english`). Applied as ordinary exclusion rules, not silent cleaning: hit counts are reported like every other rule.
 
 Re-run from the project root:
 
@@ -231,7 +232,7 @@ python -m src.process
 
 - Treat every review as wishlist-relevant
 - Skip documenting filter rules
-- Drop non-English data before measuring language distribution
+- Drop language/dialect rows for any reason other than the three named, reported rules above
 
 ---
 
