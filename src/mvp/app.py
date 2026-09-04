@@ -7,6 +7,7 @@ in-app using real product attributes. See doc/mvp_problem_statement.md for the f
 
 from __future__ import annotations
 
+import os
 import random
 import sys
 from pathlib import Path
@@ -178,7 +179,10 @@ def render_agent_test(items: list[dict[str, Any]]) -> None:
         "outside the wishlist flow, to spot-check reasoning quality before shipping changes."
     )
     if not agent.available():
-        st.warning("GROQ_API_KEY is not set — the agent has no model to call.")
+        st.warning(
+            "GROQ_API_KEY is not set — the agent has no model to call. Set it in `.env` "
+            "locally, or in this app's Secrets if it's deployed on Streamlit Community Cloud."
+        )
         return
 
     cats = ["All"] + catalog.categories(items)
@@ -283,7 +287,8 @@ def render_wishlist() -> None:
         if not agent.available():
             st.caption(
                 "⚠️ GROQ_API_KEY is not set, so the comparison agent can't run yet. "
-                "Set it in `.env` to enable “Help me decide.”"
+                "Set it in `.env` locally, or in this app's Secrets if it's deployed on "
+                "Streamlit Community Cloud, to enable “Help me decide.”"
             )
         help_disabled = len(selected_ids) < 2 or not agent.available()
         if st.button("Help me decide", disabled=help_disabled, type="primary"):
@@ -340,8 +345,29 @@ def render_sidebar() -> None:
         st.rerun()
 
 
+def _load_cloud_secrets_into_env() -> None:
+    """Streamlit Community Cloud exposes configured Secrets via st.secrets, not os.environ.
+    src/analyze/llm.py (shared by the pipeline and this app) only ever reads os.environ, so
+    without this bridge a key set in the Cloud "Secrets" UI is invisible to it -- the app would
+    keep showing "GROQ_API_KEY is not set" even after the secret is configured. Locally this is
+    a no-op past what load_dotenv() already did; os.environ.setdefault never overwrites a value
+    that's already set (e.g. from a real .env)."""
+    try:
+        secrets = st.secrets
+    except Exception:
+        return
+    for key in ("GROQ_API_KEY", "GROQ_BASE_URL", "LLM_API_KEY", "LLM_MODEL"):
+        try:
+            value = secrets.get(key)
+        except Exception:
+            value = None
+        if value:
+            os.environ.setdefault(key, str(value))
+
+
 def main() -> None:
     load_dotenv()
+    _load_cloud_secrets_into_env()
     st.set_page_config(page_title="TieBreaker -- Wishlist Comparison Agent", layout="wide")
     theme.inject_css()
     state.init_state()
