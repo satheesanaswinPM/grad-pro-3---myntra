@@ -70,6 +70,23 @@ h1, h2, h3,
   text-transform: uppercase;
   color: var(--ink) !important;
 }}
+/* Sub-headings (####, e.g. "What actually differs" / "Why") -- bold Jakarta, not Bebas, so they
+   read as body-level section markers rather than full display headlines, but still stand out. */
+h4, h5, h6,
+[data-testid="stMarkdownContainer"] h4,
+[data-testid="stMarkdownContainer"] h5,
+[data-testid="stMarkdownContainer"] h6 {{
+  font-family: 'Plus Jakarta Sans', -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+  font-weight: 700 !important;
+  color: var(--ink) !important;
+}}
+/* Bold markdown (**text**) -- explicit weight so product titles / section labels are always
+   visually distinct from surrounding body text, not left to font-fallback behavior. */
+[data-testid="stMarkdownContainer"] strong,
+.stMarkdown strong, .stMarkdown b {{
+  font-weight: 700 !important;
+  color: var(--ink) !important;
+}}
 
 /* Primary buttons -- solid pink CTA, matches "BUY THIS ONE" / "SAVE TO WISHLIST" */
 .stButton > button[kind="primary"],
@@ -134,11 +151,26 @@ div[data-testid="stRadio"] > div {{
   gap: 0.4rem;
 }}
 
-/* Tabs -- pink active state */
-.stTabs [data-baseweb="tab-list"] button[aria-selected="true"] p {{
-  color: var(--primary) !important;
+/* Tabs -- current Streamlit renders these as [data-testid="stTab"] / role="tab", not the older
+   BaseWeb tab-list markup. Inactive-tab text was inheriting Streamlit's dark-theme default
+   (near-white, ~rgb(250,250,250)) over a transparent tab background showing the page's white
+   behind it -- invisible text-on-background, same failure shape as the header/tab-list bug
+   already fixed elsewhere in this file, just a different DOM shape. */
+[data-testid="stTab"] p {{
+  color: var(--ink) !important;
+  font-weight: 600 !important;
 }}
-.stTabs [data-baseweb="tab-highlight"] {{
+[data-testid="stTab"][aria-selected="true"] p {{
+  color: var(--primary) !important;
+  font-weight: 700 !important;
+}}
+[data-testid="stTab"] {{
+  background-color: transparent !important;
+}}
+[role="tablist"] {{
+  background-color: var(--surface) !important;
+}}
+[data-testid="stTab"] .react-aria-SelectionIndicator {{
   background-color: var(--primary) !important;
 }}
 

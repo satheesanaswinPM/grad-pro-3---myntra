@@ -1,4 +1,4 @@
-"""Decide -- Wishlist Comparison Agent. Streamlit UI.
+"""TieBreaker -- Wishlist Comparison Agent. Streamlit UI.
 
 Combines the two MVP mechanisms scoped for Part 5: (1) capturing *why* an item was wishlisted and
 nudging the user back before attention decays, and (2) an AI agent that resolves the comparison
@@ -7,6 +7,7 @@ in-app using real product attributes. See doc/mvp_problem_statement.md for the f
 
 from __future__ import annotations
 
+import random
 import sys
 from pathlib import Path
 from typing import Any
@@ -36,6 +37,49 @@ def _truncate(text: str, n: int = 110) -> str:
     return text if len(text) <= n else text[: n - 1].rstrip() + "…"
 
 
+# The raw scrape (data/raw/huggingface/Gssmc__myntra_dataset/train.jsonl) has no image field at
+# all -- verified across every in-stock, complete row. Rather than fabricate a photo, each card
+# gets an honest color swatch built from the dataset's own `dominant_color` text field.
+_SWATCH_COLORS = {
+    "black": "#1A1A1A", "white": "#F2F2F0", "red": "#B23A2E", "blue": "#2E5C8A",
+    "green": "#3B7A4F", "yellow": "#C9A227", "pink": "#C97DA0", "purple": "#6F5A9E",
+    "orange": "#C97A3D", "brown": "#6B4A34", "grey": "#8C8C8C", "gray": "#8C8C8C",
+    "beige": "#D9C7A3", "maroon": "#7A2331", "navy": "#243B5C", "cream": "#E7DCC0",
+    "gold": "#AD8A2E", "silver": "#B7B7B7", "multi": "#8B6FA0", "olive": "#6E7534",
+    "peach": "#DDA98A", "mustard": "#C9A227", "rust": "#A5502E", "teal": "#2E7A72",
+}
+_SWATCH_FALLBACK = "#C9CDD6"
+
+
+def _swatch_hex(color_text: str) -> str:
+    t = (color_text or "").lower()
+    for name, hex_value in _SWATCH_COLORS.items():
+        if name in t:
+            return hex_value
+    return _SWATCH_FALLBACK
+
+
+def _text_on(hex_value: str) -> str:
+    h = hex_value.lstrip("#")
+    r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+    luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+    return "#1A1A1A" if luminance > 0.6 else "#FFFFFF"
+
+
+def _render_swatch(product: dict[str, Any]) -> None:
+    bg = _swatch_hex(product.get("color", ""))
+    fg = _text_on(bg)
+    label = (product.get("color") or product["category"]).strip().title()
+    st.markdown(
+        f'<div style="width:100%;height:130px;border-radius:10px;background:{bg};'
+        f'display:flex;align-items:center;justify-content:center;margin-bottom:0.6rem;">'
+        f'<span style="font-size:0.68rem;font-weight:700;color:{fg};text-transform:uppercase;'
+        f'letter-spacing:0.04em;text-align:center;padding:0 0.5rem;">{label}<br>'
+        f'<span style="font-weight:500;opacity:0.85;">no photo in dataset</span></span></div>',
+        unsafe_allow_html=True,
+    )
+
+
 def render_browse(items: list[dict[str, Any]]) -> None:
     st.caption(
         "Real Myntra product listings, filtered to a comparable demo subset "
@@ -52,6 +96,7 @@ def render_browse(items: list[dict[str, Any]]) -> None:
         for col, product in zip(cols, filtered[row_start : row_start + cols_per_row]):
             with col:
                 with st.container(border=True):
+                    _render_swatch(product)
                     st.markdown(f"**{product['title']}**")
                     st.caption(f"{product['brand']} · {product['category']} · {_price(product['price'])}")
                     if product["details"]:
@@ -113,6 +158,97 @@ def _render_agent_result(result: dict[str, Any], entries: dict[str, dict[str, An
                 st.rerun()
     st.markdown("#### Why")
     st.write(result["recommendation_rationale"])
+
+
+def _render_test_result(result: dict[str, Any], entries: dict[str, dict[str, Any]]) -> None:
+    st.write(result["summary"])
+    for row in result["items"]:
+        item_id = str(row.get("id"))
+        entry = entries.get(item_id)
+        title = entry["product"]["title"] if entry else item_id
+        badge = " " + theme.pill("Recommended", kind="primary") if row.get("recommended") else ""
+        st.markdown(f"**{title}**{badge}", unsafe_allow_html=True)
+        st.write(row.get("fit_for_stated_reason", ""))
+    st.caption(result["recommendation_rationale"])
+
+
+def render_agent_test(items: list[dict[str, Any]]) -> None:
+    st.caption(
+        "Live testing pipeline for the comparison agent — fire real comparisons at it directly, "
+        "outside the wishlist flow, to spot-check reasoning quality before shipping changes."
+    )
+    if not agent.available():
+        st.warning("GROQ_API_KEY is not set — the agent has no model to call.")
+        return
+
+    cats = ["All"] + catalog.categories(items)
+
+    st.markdown("#### Manual scenario")
+    cat = st.selectbox("Category", cats, key="test_category")
+    pool = items if cat == "All" else [i for i in items if i["category"] == cat]
+    labels = {f"{p['title']} ({p['brand']}, {_price(p['price'])})": p for p in pool}
+    picked_labels = st.multiselect("Pick 2–3 items to compare", list(labels.keys()), key="test_picks")
+    reason = st.selectbox(
+        "Reason (applied to every picked item)",
+        list(REASON_LABELS.keys()),
+        format_func=lambda r: REASON_LABELS[r],
+        key="test_reason",
+    )
+    if st.button("Run this scenario", type="primary", disabled=len(picked_labels) < 2, key="test_run_manual"):
+        entries = [{"product": labels[label], "reason": reason} for label in picked_labels]
+        with st.spinner("Calling the agent..."):
+            try:
+                result = agent.compare(entries)
+            except agent.AgentError as exc:
+                st.session_state["test_last_result"] = None
+                st.error(f"Agent error: {exc}")
+            else:
+                st.session_state["test_last_result"] = {
+                    "result": result,
+                    "entries": {str(e["product"]["id"]): e for e in entries},
+                }
+    last = st.session_state.get("test_last_result")
+    if last:
+        st.divider()
+        _render_test_result(last["result"], last["entries"])
+
+    st.divider()
+    st.markdown("#### Batch test")
+    st.caption("Run several random real comparisons back to back to spot-check consistency across items.")
+    col1, col2 = st.columns(2)
+    n_runs = col1.number_input("Number of comparisons", min_value=1, max_value=10, value=3, step=1, key="test_n")
+    batch_cat = col2.selectbox("Category", cats, key="test_batch_category")
+    if st.button("Run batch", key="test_run_batch"):
+        pool2 = items if batch_cat == "All" else [i for i in items if i["category"] == batch_cat]
+        results: list[dict[str, Any]] = []
+        with st.spinner(f"Running {int(n_runs)} comparisons..."):
+            for _ in range(int(n_runs)):
+                if len(pool2) < 2:
+                    break
+                pair = random.sample(pool2, 2)
+                entries = [{"product": p, "reason": "comparing"} for p in pair]
+                try:
+                    result = agent.compare(entries)
+                except agent.AgentError as exc:
+                    results.append({"ok": False, "entries": entries, "error": str(exc)})
+                else:
+                    results.append({"ok": True, "entries": entries, "result": result})
+        st.session_state["test_batch_results"] = results
+
+    batch = st.session_state.get("test_batch_results")
+    if batch:
+        st.markdown(f"**{sum(1 for r in batch if r['ok'])} / {len(batch)} succeeded**")
+        for i, r in enumerate(batch, start=1):
+            names = " vs. ".join(e["product"]["title"] for e in r["entries"])
+            status = "" if r["ok"] else "  ⚠️ failed"
+            with st.expander(f"{i}. {names}{status}"):
+                if r["ok"]:
+                    st.write(r["result"]["summary"])
+                    for row in r["result"]["items"]:
+                        tag = " — **recommended**" if row.get("recommended") else ""
+                        st.write(f"- {row.get('id')}{tag}: {row.get('fit_for_stated_reason', '')}")
+                else:
+                    st.error(r["error"])
 
 
 def render_wishlist() -> None:
@@ -186,17 +322,17 @@ def render_wishlist() -> None:
 
 
 def render_sidebar() -> None:
-    st.sidebar.title("Decide")
-    st.sidebar.caption("Wishlist Comparison Agent · Myntra Growth · Part 5 MVP")
+    st.sidebar.title("TieBreaker")
+    st.sidebar.caption("Wishlist Comparison Agent · Myntra Growth")
     st.sidebar.markdown(
         "Targets the validated root cause: wishlisted comparisons go cold instead of resolving. "
-        "No discounts, coupons, or price-drop framing anywhere in this MVP."
+        "No discounts, coupons, or price-drop framing anywhere here."
     )
     st.sidebar.divider()
     st.sidebar.markdown(f"**Simulated day: {st.session_state['sim_day']}**")
     st.sidebar.caption(
         "⏩ Fast-forward stands in for real elapsed time / push notifications, which are out of "
-        "scope for this MVP -- it is a deliberate simulation, not real time."
+        "scope here -- it is a deliberate simulation, not real time."
     )
     days = st.sidebar.number_input("Days to fast-forward", min_value=1, max_value=30, value=7, step=1)
     if st.sidebar.button("⏩ Fast-forward"):
@@ -206,15 +342,16 @@ def render_sidebar() -> None:
 
 def main() -> None:
     load_dotenv()
-    st.set_page_config(page_title="Decide -- Wishlist Comparison Agent", layout="wide")
+    st.set_page_config(page_title="TieBreaker -- Wishlist Comparison Agent", layout="wide")
     theme.inject_css()
     state.init_state()
     render_sidebar()
 
-    st.title("Decide")
+    st.title("TieBreaker")
     st.caption(
-        "Save real Myntra items, tell us why, and get help resolving the comparison before you "
-        "forget about it. Built on the validated Part 4 finding: comparisons go cold, not \"no.\""
+        "The tiebreaker for your wishlist. Save real Myntra items, tell us why, and get help "
+        "resolving the comparison before you forget about it. Built on a validated finding: "
+        "comparisons go cold, not \"no.\""
     )
 
     try:
@@ -223,11 +360,15 @@ def main() -> None:
         st.error(str(exc))
         st.stop()
 
-    tab_browse, tab_wishlist = st.tabs(["\U0001f6cd️ Browse", "❤️ My Wishlist"])
+    tab_browse, tab_wishlist, tab_test = st.tabs(
+        ["\U0001f6cd️ Browse", "❤️ My Wishlist", "\U0001f9ea Test the Agent"]
+    )
     with tab_browse:
         render_browse(items)
     with tab_wishlist:
         render_wishlist()
+    with tab_test:
+        render_agent_test(items)
 
 
 if __name__ == "__main__":

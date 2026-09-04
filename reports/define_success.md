@@ -1,6 +1,6 @@
 # Part 6 — Define Success
 
-Myntra Growth · Success metrics for the "Decide" wishlist comparison agent MVP.
+Myntra Growth · Success metrics for the "TieBreaker" wishlist comparison agent MVP.
 Slide source: `reports/define_success_part6.pptx`.
 
 ---

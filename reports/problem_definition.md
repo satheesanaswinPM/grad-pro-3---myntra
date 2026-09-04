@@ -1,7 +1,7 @@
 # Part 4 — Define the Problem
 
 Myntra Growth · Wishlist-to-Purchase Conversion
-Source evidence: `reports/opportunity_register.md` (Phase 5, AI discovery, n=17,495 relevant records), `reports/research_hypotheses.md` (Phase 5), and the Wishlist Behavior Survey (n=36 respondents, primary research).
+Source evidence: `reports/opportunity_register.md` (Phase 5, AI discovery, n=17,495 relevant records), `reports/research_hypotheses.md` (Phase 5), the Wishlist Behavior Survey (n=36 respondents, primary research), and `reports/interview_findings.md` (n=2 qualitative interviews, primary research).
 
 ---
 
@@ -13,6 +13,7 @@ Evidence for the segment's existence and size:
 - `segment:comparers` appears as a contributing segment in 9 of the top 10 AI-discovered opportunities (`reports/opportunity_register.md`), meaning comparison behavior is not a one-off theme — it recurs across barrier types.
 - In the survey, "Comparing with other options" is the single most common reason for wishlisting instead of buying immediately: **61% overall, 59% among the 22 respondents who had not purchased anything from their wishlist in 30 days.**
 - The same segment shows a second, compounding failure mode: **"I forgot about it" is the single most common reason items stay unpurchased among true non-converters (32%)** — up from 19% in the full sample. Comparison and forgetting are not two separate segments; they are two stages of the same failure for the same users.
+- Both qualitative interviews describe comparison behavior unprompted (`reports/interview_findings.md`), and together sharpen the segment definition: **"Active Comparer" is a state an item is in, not a fixed trait of the user who owns it.** A respondent with a 1,220-item wishlist was a pure bookmarker for nearly all of it, and an Active Comparer for exactly one item at a time — the same person holding both segments simultaneously, split by item, not by identity.
 
 ## 2. Product outcome we intend to influence
 
@@ -35,7 +36,8 @@ The result: the comparison either resolves silently **off-platform** (a competit
 - Keeping multiple shopping apps installed to compare in parallel — 25% of survey respondents check other shopping apps (Ajio, Amazon, Nykaa) before buying a wishlisted item.
 - "Keep checking back on it" — manually reopening the wishlist repeatedly, relying on self-directed memory rather than any product-driven prompt.
 - Asking friends or family for a second opinion to break a comparison deadlock (11%).
-- Passive reliance on notifications that respondents describe as easy to miss or ignore.
+- Passive reliance on notifications that respondents describe as easy to miss or ignore — and, per the interviews, a workaround that fails for two different reasons depending on the user: one respondent is rarely in a position to act on a notification when it arrives ("never sitting with my phone and relaxing"), the other is bombarded by alerts scoped to a 1,220-item wishlist and starts ignoring all of them.
+- Relying on brand familiarity as an informal fit-confidence proxy — both interview respondents independently said sizing only becomes uncertain outside brands they already know, sharpening "fit uncertainty" to a more precise claim: it concentrates on unfamiliar brands, not fit uncertainty in general.
 
 These are all manual, memory-dependent substitutes for something the product isn't doing: keeping the comparison alive and actionable.
 
@@ -59,8 +61,9 @@ Users who let a comparison go cold don't just fail to convert — they lose some
 | **Business Metric** | % of users who purchase ≥1 wishlisted item within 30 days of adding it. Monetary incentives excluded. | A single, time-boxed conversion number — undiagnostic on its own. |
 | **Product Outcomes** | Decomposed the metric into 5 sequential gates: Re-engagement → Uncertainty Resolution → Comparison Resolution → Decision Trigger → Purchase Completion. | A funnel to place evidence against, instead of guessing which barrier "feels" biggest. |
 | **AI Discovery** | Raw opportunity ranking (frequency × severity × evidence) put `returns_exchange` at #1 by volume. But the same engine's `purchase_hesitation_link` sub-score ranked `comparison_loop` **highest** (0.6338) and `returns_exchange` **lowest** (0.1074) of the top 10 — volume and relevance disagreed. | A live contradiction the raw ranking alone would have missed: the "biggest" theme by mentions was not the theme structurally tied to the wishlist decision. |
-| **Primary Research** | Survey (n=36) found comparison the #1 reason to wishlist (61%) *and* the #1 reason to abandon without buying (42%) — the only hypothesis dominant in two independent questions. Forgetting was the #1 blocker among actual non-converters (32%). Returns/exchange had **zero** mentions anywhere in the survey. | Confirmed the AI engine's hesitation-link signal and resolved the contradiction: `returns_exchange` is post-purchase review-mining bias; `comparison_loop` (plus its re-engagement precursor) is the real wishlist-stage bottleneck. |
-| **Problem Definition** | Combined all three sources onto one root cause. | The wishlist is a passive bookmark, not a decision workspace — Active Comparers lose the sale not by deciding "no," but by never getting to decide at all. |
+| **Primary Research — Survey** | Survey (n=36) found comparison the #1 reason to wishlist (61%) *and* the #1 reason to abandon without buying (42%) — the only hypothesis dominant in two independent questions. Forgetting was the #1 blocker among actual non-converters (32%). Returns/exchange had **zero** mentions anywhere in the survey. | Confirmed the AI engine's hesitation-link signal and resolved the contradiction: `returns_exchange` is post-purchase review-mining bias; `comparison_loop` (plus its re-engagement precursor) is the real wishlist-stage bottleneck. |
+| **Primary Research — Interviews** | Two qualitative interviews (`reports/interview_findings.md`) confirmed `comparison_loop` unprompted, sharpened fit uncertainty to unfamiliar brands specifically, and refined the segment to item-level (not user-level) intent. They also surfaced findings the review-mining pipeline underweighted — a real trust/counterfeit account against a low-ranked opportunity, and a third abandonment mechanism (need-obsolescence) — plus a caution: neither respondent's own unprompted "fix" matches the MVP's chosen mechanism. | Corroborated the core hypothesis directionally (n=2, not confirmatory on its own) and added nuance the survey's closed-ended questions couldn't surface — while also surfacing an open risk (tracked as A3 in `reports/risks_and_mitigation.md`) that the specific solution shape was never independently confirmed as the right one. |
+| **Problem Definition** | Combined all sources onto one root cause. | The wishlist is a passive bookmark, not a decision workspace — Active Comparers lose the sale not by deciding "no," but by never getting to decide at all. |
 
 ## Problem statement (one paragraph)
 

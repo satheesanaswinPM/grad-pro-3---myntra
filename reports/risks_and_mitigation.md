@@ -1,15 +1,16 @@
 # Part 7 — Risks & Mitigation
 
-Myntra Growth · Wishlist-to-Purchase Conversion · "Decide" MVP
+Myntra Growth · Wishlist-to-Purchase Conversion · "TieBreaker" MVP
 
 This document is deliberately scoped to **this specific solution** — the validated
-`comparison_loop` hypothesis from Part 4 (`reports/problem_definition.md`) and the "Decide" MVP built
-for Part 5 (`src/mvp/`) — not generic product-launch risk. Every risk below traces to one of three
+`comparison_loop` hypothesis from Part 4 (`reports/problem_definition.md`) and the "TieBreaker" MVP built
+for Part 5 (`src/mvp/`) — not generic product-launch risk. Every risk below traces to one of four
 origins: (a) an evidentiary limit of the hypothesis itself, (b) a specific line of the MVP's actual
-architecture, or (c) independent external market research surfacing a failure mode the original scoping
-didn't anticipate (B5). Where a risk is already anticipated by a Part 6 guardrail
-(`reports/define_success.md`), that link is called out explicitly — the guardrails were designed against
-these exact failure modes, not written in the abstract.
+architecture, (c) independent external market research surfacing a failure mode the original scoping
+didn't anticipate (B5), or (d) the completed Part 3 interviews (`reports/interview_findings.md`)
+surfacing a finding the original scoping didn't anticipate (A3). Where a risk is already anticipated by
+a Part 6 guardrail (`reports/define_success.md`), that link is called out explicitly — the guardrails
+were designed against these exact failure modes, not written in the abstract.
 
 Risks are grouped into four categories and ranked by priority within each.
 
@@ -39,23 +40,54 @@ treated as a gate into a real randomized experiment against actual 30-day purcha
 substitute for one. Track the Part 6 guardrails in parallel so a rise in Resolution Rate alone is never
 sufficient grounds to declare the hypothesis proven.
 
-### A2. Small, self-selected survey sample — **High**
+### A2. Small primary-research sample — **High**
 
-**Why this could happen:** The primary research that corroborated `comparison_loop` (61% wishlist
-motive, 42% top removal reason) is a 36-respondent Google Form, not the 5–6 qualitative interviews
-originally scoped in Part 3. Those interviews were guided and 7 candidates opted in with contact
-details, but — per the project's own status tracking — **were never actually conducted.** Form
-respondents self-select toward people willing to fill out a survey, which likely skews toward more
-analytical, engaged shoppers and under-represents the casual "just liked it" bookmarker segment
-(which the survey itself still measured at 19–27% of responses).
+**Why this could happen:** The primary research behind `comparison_loop` rests on a 36-respondent
+Google Form plus 2 qualitative interviews (`reports/interview_findings.md`) — short of the 5–6
+interviews originally scoped in Part 3. Primary research is now closed (no further interviews will be
+conducted), so this is the final sample, not an interim one. Both interview respondents happened to be
+women shopping fashion/footwear categories; neither speaks for male shoppers, beauty-category shoppers,
+or first-time Myntra users. Form respondents self-select toward people willing to fill out a survey,
+which likely skews toward more analytical, engaged shoppers and under-represents the casual "just
+liked it" bookmarker segment (which the survey itself still measured at 19–27% of responses).
 
 **Failure mode:** "Active Comparers" may not generalize to the full wishlist user base; the MVP could
 be solving a real problem for a segment that is smaller, or behaves differently in a live product
-context, than the survey suggests.
+context, than the survey and interviews suggest.
 
-**Mitigation:** Run the already-scoped interview guide (`doc/mvp_problem_statement.md` references the
-same segment) against the 7 opted-in respondents before generalizing MVP results — treat current
-findings as directional, not confirmatory, until that happens.
+**Mitigation:** The two interviews genuinely strengthened this — they independently confirmed
+`comparison_loop` unprompted and sharpened two hypotheses (fit uncertainty → unfamiliar brands; segment
+→ item-level, not user-level) the survey's closed-ended questions couldn't have surfaced on their own.
+But n=2 is still a small, non-representative qualitative sample. Treat current findings as strong
+directional corroboration, not a confirmatory sample — the next validation step has to come from
+live-product data (D1), not more interviews.
+
+### A3. The MVP's mechanism was never independently confirmed as the right fix — **High**
+
+**Why this could happen:** Both interview respondents were asked, unprompted, what one non-monetary
+thing Myntra could fix. Neither reached for "help me compare items with an AI recommendation" — the
+mechanism this MVP actually builds. One asked for a **Try & Buy bundle** (order several comparison
+candidates together, decide with them physically in hand, return the losers in one shipment — a
+fulfillment fix). The other asked for **AI-driven wishlist curation** (automatic occasion-aware
+surfacing from a large wishlist — an organization fix). Full detail in
+`reports/interview_findings.md`. The underlying behavioral problem (`comparison_loop`) is strongly
+validated by both interviews; the specific solution shape chosen for the MVP is not what either
+respondent reached for on their own.
+
+**Failure mode:** The MVP could correctly diagnose the problem and still under-deliver relative to a
+differently-shaped solution — e.g., users may prefer a physical-trial or auto-curation fix strongly
+enough that an AI comparison agent, however well it reasons, is solving the right problem in a shape
+users don't reach for. Regretted-removal rate (B2) and Comparison Resolution Rate could both look
+healthy in-app while a differently-shaped solution would have converted meaningfully more of the same
+segment.
+
+**Mitigation:** n=2 is not enough to say the mechanism is wrong — only that it was never independently
+confirmed as right, which is a materially different and weaker evidentiary position than the rest of
+Part 4's problem-side claims. Before investing further in the AI-agent mechanism specifically (as
+opposed to the underlying comparison-resolution problem), add a lightweight in-app signal that
+distinguishes *why* a user engages with "Help me decide" — decision support vs. wanting a bundle/trial
+vs. wanting better organization — so the next iteration decision is evidence-driven rather than a
+continued bet on the original mechanism choice.
 
 ---
 
@@ -220,18 +252,20 @@ scoped Part 3 interviews against the live MVP rather than a description of it.
 | B1. Reason-capture friction shrinks the funnel | Mechanism | Critical | Guardrail: Wishlist add rate · Add-flow abandonment rate |
 | B2. AI agent steers a bad decision | Mechanism | Critical | Guardrail: Regretted-removal rate |
 | C1. Monetary-language leakage | Compliance | Critical | Guardrail: Monetary-language leakage (target 0%) |
-| A2. Small, self-selected survey sample | Hypothesis | High | — (needs the scoped Part 3 interviews) |
+| A2. Small primary-research sample | Hypothesis | High | — (interviews complete; next validation is live-product data, D1) |
+| A3. MVP mechanism never independently confirmed as the right fix | Hypothesis | High | — (needs an in-app signal distinguishing why users engage with "Help me decide") |
 | B3. Re-engagement channel unvalidated | Mechanism | High | Leading indicator: Nudge-to-engagement rate |
 | B5. Success could increase returns, not just conversions | Mechanism | High | — (needs a new return-rate metric, not yet built) |
 | D1. Session-only state, real metric unmeasured | Scope | High | — (needs minimal persistence) |
 | B4. Live LLM dependency, no caching | Mechanism | Medium | Guardrail: Agent failure rate |
 | D2. Not yet deployed to production | Scope | Medium | — (deploy steps already provided) |
 
-Five of ten risks already have an existing Part 6 metric — a guardrail or a leading indicator —
+Five of eleven risks already have an existing Part 6 metric — a guardrail or a leading indicator —
 watching for them directly. A1 is instead handled by how the primary metric itself is framed (proxy,
-not replacement), rather than by a separate tracked number. The four genuine gaps (A2's missing
-interviews, B5's missing return-rate metric, D1's missing persistence, D2's pending deploy) are each a
-direct consequence either of an explicit, deliberate v1 scope cut, or — for B5 specifically — of a risk
-identified after the fact from external market research rather than during the original MVP scoping.
-Both are legitimate reasons a metric doesn't exist yet, but only one of them (B5) means the guardrail
-set itself needs to grow before wider rollout.
+not replacement), rather than by a separate tracked number. The five genuine gaps (A2's still-small
+qualitative sample, A3's unconfirmed mechanism choice, B5's missing return-rate metric, D1's missing
+persistence, D2's pending deploy) are each a direct consequence either of an explicit, deliberate v1
+scope cut, or — for A3 and B5 specifically — of findings surfaced after the original MVP scoping, from
+the completed interviews and external market research respectively. All are legitimate reasons a metric
+doesn't exist yet, but A3 and B5 are the two that mean the guardrail set itself needs to grow before
+wider rollout, not just execute what was already planned.

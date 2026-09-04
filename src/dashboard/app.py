@@ -29,20 +29,31 @@ from src.dashboard.modules import (
     wishlist_intent,
 )
 
+
+def _merge(*fns):
+    """Stack two module renderers on one page, divided -- no changes to either module's own code."""
+
+    def _render(store: Store) -> None:
+        import streamlit as st
+
+        for i, fn in enumerate(fns):
+            if i > 0:
+                st.divider()
+            fn(store)
+
+    return _render
+
+
+# 13 original modules merged into 8 semantically-grouped pages for a shorter sidebar.
 PAGES = (
     ("Executive summary", executive_summary.render),
-    ("Wishlist intent", wishlist_intent.render),
-    ("Purchase barriers", purchase_barriers.render),
-    ("User segments", user_segments.render),
-    ("Uncertainty map", uncertainty_map.render),
+    ("Intent & segments", _merge(wishlist_intent.render, user_segments.render)),
+    ("Barriers & uncertainty", _merge(purchase_barriers.render, uncertainty_map.render)),
     ("Customer journey", customer_journey.render),
-    ("Comparison behavior", comparison_behavior.render),
-    ("External research", external_research.render),
-    ("Category analysis", category_analysis.render),
-    ("Opportunity matrix", opportunity_matrix.render),
+    ("Comparison & external research", _merge(comparison_behavior.render, external_research.render)),
+    ("Opportunity & category analysis", _merge(opportunity_matrix.render, category_analysis.render)),
     ("Evidence explorer", evidence_explorer.render),
-    ("Research hypotheses", research_hypotheses.render),
-    ("Solution concepts", solution_concepts.render),
+    ("Hypotheses & solutions", _merge(research_hypotheses.render, solution_concepts.render)),
 )
 
 
@@ -59,7 +70,17 @@ def main() -> None:
     labels = [name for name, _fn in PAGES]
     if st.session_state.get("nav") not in labels:
         st.session_state["nav"] = labels[0]
-    picked = st.sidebar.radio("Module", labels, key="nav")
+    picked = st.session_state["nav"]
+    for label in labels:
+        is_active = picked == label
+        if st.sidebar.button(
+            label,
+            key=f"nav_btn_{label}",
+            type="primary" if is_active else "secondary",
+            use_container_width=True,
+        ):
+            st.session_state["nav"] = label
+            st.rerun()
     try:
         store = load_store()
     except FileNotFoundError as exc:

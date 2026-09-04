@@ -1,4 +1,4 @@
-# MVP Problem Statement — "Decide": Wishlist Comparison Agent
+# MVP Problem Statement — "TieBreaker": Wishlist Comparison Agent
 
 Build spec for use in Cursor (or any AI coding assistant). Part 5 of the Myntra Wishlist-to-Purchase
 Discovery Pipeline. Read this whole document before writing code — it defines what to build, what data
@@ -28,7 +28,7 @@ Section 6 for why).
 
 ## 2. What to build — one-liner
 
-**"Decide"** — a standalone AI-powered experience where a user builds a small wishlist from real Myntra
+**"TieBreaker"** — a standalone AI-powered experience where a user builds a small wishlist from real Myntra
 product data, tags *why* they saved each item, gets nudged back before attention would naturally decay,
 and gets an AI agent's help actually resolving the comparison in-app.
 
