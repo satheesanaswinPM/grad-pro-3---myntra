@@ -178,6 +178,38 @@ div[data-testid="stRadio"] > div {{
 div[data-testid="stAlert"] {{
   border-radius: 12px !important;
 }}
+/* Streamlit's default warning/info/error/success colors are tuned for a dark theme --
+   e.g. warning text renders as pale yellow-white (~rgb(255,255,194)) on a barely-tinted
+   yellow background, nearly invisible against this app's forced-light surface. Same
+   failure shape as the header/tab bugs fixed above, just a different component. */
+[data-testid="stAlertContentWarning"] {{
+  background-color: #FFF3CD !important;
+}}
+[data-testid="stAlertContentWarning"] p,
+[data-testid="stAlertContentWarning"] span {{
+  color: #7A5200 !important;
+}}
+[data-testid="stAlertContentSuccess"] {{
+  background-color: #E3F3EA !important;
+}}
+[data-testid="stAlertContentSuccess"] p,
+[data-testid="stAlertContentSuccess"] span {{
+  color: {SUCCESS} !important;
+}}
+[data-testid="stAlertContentError"] {{
+  background-color: #FCE8E6 !important;
+}}
+[data-testid="stAlertContentError"] p,
+[data-testid="stAlertContentError"] span {{
+  color: #B3261E !important;
+}}
+[data-testid="stAlertContentInfo"] {{
+  background-color: #E8F0FE !important;
+}}
+[data-testid="stAlertContentInfo"] p,
+[data-testid="stAlertContentInfo"] span {{
+  color: #1A56A0 !important;
+}}
 
 /* Sidebar */
 [data-testid="stSidebar"] {{
