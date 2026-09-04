@@ -4,11 +4,12 @@ Myntra Growth · Wishlist-to-Purchase Conversion · "Decide" MVP
 
 This document is deliberately scoped to **this specific solution** — the validated
 `comparison_loop` hypothesis from Part 4 (`reports/problem_definition.md`) and the "Decide" MVP built
-for Part 5 (`src/mvp/`) — not generic product-launch risk. Every risk below traces to either (a) an
-evidentiary limit of the hypothesis itself, or (b) a specific line of the MVP's actual architecture.
-Where a risk is already anticipated by a Part 6 guardrail (`reports/define_success.md`), that link is
-called out explicitly — the guardrails were designed against these exact failure modes, not written in
-the abstract.
+for Part 5 (`src/mvp/`) — not generic product-launch risk. Every risk below traces to one of three
+origins: (a) an evidentiary limit of the hypothesis itself, (b) a specific line of the MVP's actual
+architecture, or (c) independent external market research surfacing a failure mode the original scoping
+didn't anticipate (B5). Where a risk is already anticipated by a Part 6 guardrail
+(`reports/define_success.md`), that link is called out explicitly — the guardrails were designed against
+these exact failure modes, not written in the abstract.
 
 Risks are grouped into four categories and ranked by priority within each.
 
@@ -129,6 +130,28 @@ invocation volume, add response caching keyed on the comparison-set fingerprint 
 mirroring the existing pipeline pattern, and lean on `chat_json`'s existing retry/backoff for transient
 failures.
 
+### B5. Success could increase returns, not just conversions — **High**
+
+**Why this could happen:** Nudging a stale comparison back into an explicit decision doesn't guarantee a
+well-considered one — pulling a user to decide *now* rather than on their own schedule could pull
+forward marginal, lower-conviction purchases they would otherwise have let lapse entirely. This risk
+surfaced from independent secondary research (a market case study external to this project's own data
+collection), which cites Indian fashion e-commerce return rates of 25–40%, driven 53–70% by fit/size
+issues — and Myntra's own public Trustpilot sentiment (1.1/5, with non-delivery and wrong/damaged items
+as dominant complaints) independently corroborates that returns are already a live pain point,
+regardless of anything this MVP does.
+
+**Failure mode:** The MVP's primary metric (Comparison Resolution Rate) and even the raw count of "Buy"
+decisions could rise while net realized revenue doesn't, if a meaningful share of newly-resolved "Buy"
+decisions come back as returns — the same failure shape as A1 (a rising proxy metric that doesn't
+reflect the real outcome), but here caused by the mechanism actively working rather than by it failing.
+
+**Mitigation:** No existing Part 6 metric currently watches for this — it is a genuine gap, not yet
+guarded. Before scaling, add a return-rate-of-MVP-driven-purchases metric alongside the existing
+guardrails, and treat any increase relative to baseline as a signal to slow the nudge cadence or
+strengthen the agent's fit/size confidence-checking, rather than counting Comparison Resolution Rate
+alone as success.
+
 ---
 
 ## C. Compliance risk
@@ -199,12 +222,16 @@ scoped Part 3 interviews against the live MVP rather than a description of it.
 | C1. Monetary-language leakage | Compliance | Critical | Guardrail: Monetary-language leakage (target 0%) |
 | A2. Small, self-selected survey sample | Hypothesis | High | — (needs the scoped Part 3 interviews) |
 | B3. Re-engagement channel unvalidated | Mechanism | High | Leading indicator: Nudge-to-engagement rate |
+| B5. Success could increase returns, not just conversions | Mechanism | High | — (needs a new return-rate metric, not yet built) |
 | D1. Session-only state, real metric unmeasured | Scope | High | — (needs minimal persistence) |
 | B4. Live LLM dependency, no caching | Mechanism | Medium | Guardrail: Agent failure rate |
 | D2. Not yet deployed to production | Scope | Medium | — (deploy steps already provided) |
 
-Five of nine risks already have an existing Part 6 metric — a guardrail or a leading indicator —
+Five of ten risks already have an existing Part 6 metric — a guardrail or a leading indicator —
 watching for them directly. A1 is instead handled by how the primary metric itself is framed (proxy,
-not replacement), rather than by a separate tracked number. The three genuine gaps (A2's missing
-interviews, D1's missing persistence, D2's pending deploy) are each a direct consequence of an explicit,
-deliberate v1 scope cut, not an oversight — and are the natural next increments after this MVP.
+not replacement), rather than by a separate tracked number. The four genuine gaps (A2's missing
+interviews, B5's missing return-rate metric, D1's missing persistence, D2's pending deploy) are each a
+direct consequence either of an explicit, deliberate v1 scope cut, or — for B5 specifically — of a risk
+identified after the fact from external market research rather than during the original MVP scoping.
+Both are legitimate reasons a metric doesn't exist yet, but only one of them (B5) means the guardrail
+set itself needs to grow before wider rollout.
