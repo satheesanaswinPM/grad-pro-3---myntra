@@ -55,10 +55,16 @@ def quote_cards(insights: list[dict[str, Any]], empty: str = "No verbatim eviden
                 st.write(item.get("text") or "")
 
 
-def open_evidence(record_ids: list[str], title: str, theme_ids: str = "", extractor: str = "") -> bool:
+def open_evidence(
+    record_ids: list[str], title: str, theme_ids: str = "", extractor: str = "", key_prefix: str = ""
+) -> bool:
+    """key_prefix disambiguates the button's Streamlit key when two modules that both key on the
+    same opportunity_id (e.g. research_hypotheses and solution_concepts, which iterate the same
+    ranked-opportunity list) can end up rendered on one merged page -- without it, both would emit
+    the identical key `ev-{title}` and Streamlit raises StreamlitDuplicateElementKey."""
     import streamlit as st
 
-    clicked = st.button("Read supporting feedback", key=f"ev-{title}")
+    clicked = st.button("Read supporting feedback", key=f"ev-{key_prefix}{title}")
     if clicked:
         st.session_state["nav"] = "Evidence explorer"
         st.session_state["evidence_ids"] = record_ids

@@ -70,6 +70,7 @@ def render(store: Store) -> None:
             split_ids(opp.get("evidence_record_ids")),
             str(opp.get("opportunity_id")),
             theme_ids=str(opp.get("theme_ids") or ""),
+            key_prefix="sol-",
         )
         with st.expander("Supporting feedback"):
             quote_cards(store.insights_for_opportunity(opp, limit=6))

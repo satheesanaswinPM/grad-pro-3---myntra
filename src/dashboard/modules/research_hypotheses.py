@@ -34,6 +34,7 @@ def render(store: Store) -> None:
             split_ids(row.get("evidence_record_ids")),
             str(row.get("opportunity_id")),
             theme_ids=str(row.get("theme_ids") or ""),
+            key_prefix="hyp-",
         )
         with st.expander("Sample evidence"):
             quote_cards(store.insights_for_opportunity(row, limit=5))
