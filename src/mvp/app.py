@@ -39,8 +39,9 @@ def _truncate(text: str, n: int = 110) -> str:
 
 
 # The raw scrape (data/raw/huggingface/Gssmc__myntra_dataset/train.jsonl) has no image field at
-# all -- verified across every in-stock, complete row. Rather than fabricate a photo, each card
-# gets an honest color swatch built from the dataset's own `dominant_color` text field.
+# all -- verified across every in-stock, complete row. Most cards now show a real representative
+# photo instead (see _render_product_visual / data/raw/representative_photos/SOURCE.md); this
+# color swatch is the fallback for the rare item no photo could be matched to.
 _SWATCH_COLORS = {
     "black": "#1A1A1A", "white": "#F2F2F0", "red": "#B23A2E", "blue": "#2E5C8A",
     "green": "#3B7A4F", "yellow": "#C9A227", "pink": "#C97DA0", "purple": "#6F5A9E",
@@ -81,6 +82,20 @@ def _render_swatch(product: dict[str, Any]) -> None:
     )
 
 
+def _render_product_visual(product: dict[str, Any]) -> None:
+    """Show a real representative photo when one was matched (see
+    data/raw/representative_photos/SOURCE.md), honestly labeled -- it is a different, comparable
+    product matched by category + color, never claimed as a photo of this exact scraped item.
+    Falls back to the color swatch when no photo exists."""
+    photo_path = product.get("photo_path")
+    if not photo_path:
+        _render_swatch(product)
+        return
+    st.image(photo_path, use_container_width=True)
+    caption = "Representative style" if product.get("photo_exact_match") else "Representative style (closest category match)"
+    st.caption(caption)
+
+
 def render_browse(items: list[dict[str, Any]]) -> None:
     st.caption(
         "Real Myntra product listings, filtered to a comparable demo subset "
@@ -97,7 +112,7 @@ def render_browse(items: list[dict[str, Any]]) -> None:
         for col, product in zip(cols, filtered[row_start : row_start + cols_per_row]):
             with col:
                 with st.container(border=True):
-                    _render_swatch(product)
+                    _render_product_visual(product)
                     st.markdown(f"**{product['title']}**")
                     st.caption(f"{product['brand']} · {product['category']} · {_price(product['price'])}")
                     if product["details"]:
@@ -123,13 +138,18 @@ def _comparison_row(item_id: str, entry: dict[str, Any], *, stale: bool) -> bool
     product = entry["product"]
     held = state.days_held(entry)
     since = state.days_since_engaged(entry)
-    selected = st.checkbox(
-        f"**{product['title']}** ({product['brand']}, {_price(product['price'])}) — held {held}d",
-        value=True,
-        key=f"select_{item_id}",
-    )
-    if stale:
-        st.markdown(theme.pill(f"no activity for {since}d", kind="primary"), unsafe_allow_html=True)
+    thumb_col, main_col = st.columns([1, 8])
+    with thumb_col:
+        if product.get("photo_path"):
+            st.image(product["photo_path"], use_container_width=True)
+    with main_col:
+        selected = st.checkbox(
+            f"**{product['title']}** ({product['brand']}, {_price(product['price'])}) — held {held}d",
+            value=True,
+            key=f"select_{item_id}",
+        )
+        if stale:
+            st.markdown(theme.pill(f"no activity for {since}d", kind="primary"), unsafe_allow_html=True)
     return selected
 
 

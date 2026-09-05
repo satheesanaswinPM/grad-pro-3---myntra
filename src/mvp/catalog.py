@@ -3,6 +3,12 @@
 Reads data/raw/huggingface/Gssmc__myntra_dataset/train.jsonl directly (read-only) -- the raw scrape,
 not the discovery pipeline's processed tables. Do not hand-write mock products; do not surface
 variant_compare_at_price anywhere (discount framing is out of scope for the no-monetary-incentive MVP).
+
+This catalog has no image field at all (verified against its schema and the live source dataset
+page -- Tabular/Text modalities only, no image column or manifest anywhere in that repo). Each item
+is optionally paired with a *representative* photo of a different, comparable product from a
+separate real dataset, matched by category + color -- see data/raw/representative_photos/SOURCE.md.
+Never claim it is a photo of the exact scraped item; the UI must label it as representative.
 """
 
 from __future__ import annotations
@@ -13,6 +19,8 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 CATALOG_PATH = ROOT / "data" / "raw" / "huggingface" / "Gssmc__myntra_dataset" / "train.jsonl"
+PHOTOS_DIR = ROOT / "data" / "raw" / "representative_photos"
+PHOTOS_MANIFEST = PHOTOS_DIR / "manifest.json"
 
 # A coherent, comparable demo subset (see doc/mvp_problem_statement.md, Section 3). Of the 15,000
 # rows only ~1,000 carry full product metadata; the rest are incomplete scrape rows and are dropped.
@@ -50,6 +58,16 @@ def _clean(row: dict[str, Any]) -> dict[str, Any] | None:
     }
 
 
+def _load_photo_manifest() -> dict[str, dict[str, Any]]:
+    """Maps catalog item id -> representative-photo metadata (see
+    data/raw/representative_photos/SOURCE.md). These are real photos of a different, comparable
+    Myntra product matched by category + color -- not the exact item that was scraped for this
+    catalog. Empty dict if the manifest hasn't been built."""
+    if not PHOTOS_MANIFEST.exists():
+        return {}
+    return json.loads(PHOTOS_MANIFEST.read_text(encoding="utf-8"))
+
+
 def load_catalog() -> list[dict[str, Any]]:
     """Read the raw catalog file and return the cleaned, filtered demo subset. No caching here --
     callers (the Streamlit app) are responsible for caching across reruns."""
@@ -58,6 +76,7 @@ def load_catalog() -> list[dict[str, Any]]:
             f"Catalog not found at {CATALOG_PATH}. This MVP reads the raw scrape directly; "
             "it does not run the discovery pipeline."
         )
+    photo_manifest = _load_photo_manifest()
     seen: set[str] = set()
     items: list[dict[str, Any]] = []
     with CATALOG_PATH.open(encoding="utf-8") as fh:
@@ -70,6 +89,9 @@ def load_catalog() -> list[dict[str, Any]]:
             if cleaned is None or cleaned["id"] in seen:
                 continue
             seen.add(cleaned["id"])
+            photo = photo_manifest.get(cleaned["id"])
+            cleaned["photo_path"] = str(PHOTOS_DIR / photo["file"]) if photo else None
+            cleaned["photo_exact_match"] = bool(photo) and photo["match"] == "color+category"
             items.append(cleaned)
     items.sort(key=lambda r: (r["category"], r["brand"], r["title"]))
     return items
