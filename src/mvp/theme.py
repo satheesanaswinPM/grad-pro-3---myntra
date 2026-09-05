@@ -11,13 +11,15 @@ from __future__ import annotations
 
 import streamlit as st
 
-PRIMARY = "#D82054"
+PRIMARY = "#FF3F6C"  # Myntra's actual signature brand pink (was #D82054, a darker berry approximation)
+PRIMARY_HOVER = "#E12E59"
 INK = "#282C3F"
 MUTED = "#535766"
 SURFACE = "#FFFFFF"
 SURFACE_SOFT = "#F5F5F6"
 BORDER = "#EAEAEC"
 SUCCESS = "#006540"
+NAV_TEXT_MUTED = "#AFB6CC"  # muted/caption text tuned for the dark sidebar, not the light --muted
 
 FONT_LINKS = (
     '<link rel="preconnect" href="https://fonts.googleapis.com">'
@@ -30,11 +32,13 @@ CSS = f"""
 <style>
 :root {{
   --primary: {PRIMARY};
+  --primary-hover: {PRIMARY_HOVER};
   --ink: {INK};
   --muted: {MUTED};
   --surface: {SURFACE};
   --surface-soft: {SURFACE_SOFT};
   --border: {BORDER};
+  --nav-text-muted: {NAV_TEXT_MUTED};
 }}
 
 /* Base type -- !important because Streamlit's own stylesheet loads with equal-specificity
@@ -102,7 +106,7 @@ h4, h5, h6,
 }}
 .stButton > button[kind="primary"]:hover,
 .stFormSubmitButton > button[kind="primary"]:hover {{
-  background-color: #b1003f !important;
+  background-color: var(--primary-hover) !important;
   color: white !important;
 }}
 .stButton > button[kind="primary"]:disabled {{
@@ -211,13 +215,43 @@ div[data-testid="stAlert"] {{
   color: #1A56A0 !important;
 }}
 
-/* Sidebar */
+/* Sidebar / navigation -- deliberately darker than the rest of the app (the main surface is
+   white). Every text rule below is necessary, not decorative: the base type rule at the top of
+   this file forces `color: var(--ink)` (dark) globally, which would be invisible dark-on-dark
+   against this now-dark sidebar background -- the exact bug already found and fixed twice
+   elsewhere in this file (tabs, alerts), pre-empted here instead of discovered by a screenshot. */
 [data-testid="stSidebar"] {{
-  background-color: var(--surface-soft) !important;
-  border-right: 1px solid var(--border);
+  background-color: var(--ink) !important;
+  border-right: none !important;
 }}
 [data-testid="stSidebar"] h1 {{
   color: var(--primary) !important;
+}}
+[data-testid="stSidebar"] .stMarkdown p,
+[data-testid="stSidebar"] .stMarkdown li,
+[data-testid="stSidebar"] .stMarkdown strong,
+[data-testid="stSidebar"] [data-testid="stWidgetLabel"] p,
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p {{
+  color: #FFFFFF !important;
+}}
+[data-testid="stSidebar"] [data-testid="stCaptionContainer"],
+[data-testid="stSidebar"] [data-testid="stCaptionContainer"] p {{
+  color: var(--nav-text-muted) !important;
+}}
+[data-testid="stSidebar"] hr {{
+  border-color: rgba(255, 255, 255, 0.16) !important;
+}}
+/* Fast-forward control -- a light input/button reading as an inset control on the dark nav,
+   the same "light control on dark surface" pattern the rest of the app already uses elsewhere.
+   Must re-force dark text here: the broad white-text rule above also catches this button's own
+   label (Streamlit renders it through the same stMarkdownContainer/<p> path as body text), which
+   would otherwise leave white label text on this button's now-white background. */
+[data-testid="stSidebar"] .stButton > button[kind="secondary"] {{
+  background-color: var(--surface) !important;
+  border: 1.5px solid var(--surface) !important;
+}}
+[data-testid="stSidebar"] .stButton > button[kind="secondary"] p {{
+  color: var(--ink) !important;
 }}
 
 /* Inputs */
